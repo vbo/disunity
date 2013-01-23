@@ -1,0 +1,167 @@
+body {
+    background: black;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.map_holder {
+    position: relative;
+    top: 0;
+    overflow: hidden;
+}
+.hud {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 51px;
+    padding: 10px;
+    opacity: 0.15;
+    color: #eaf5e5;
+    font-family: "Trebuchet MS", sans-serif;
+}
+.hud:hover {
+    opacity: 0.75;
+}
+.hud .resource {
+    float: right;
+    padding: 14px 7px;
+    font-size: 12px;
+    display: block;
+}
+.hud .tracks {
+    float: left;
+}
+.hud .tracks ul {
+    height: 10px;
+    float: right;
+    margin: 0;
+    padding: 0;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.hud .tracks ul li {
+    display: block;
+    float: left;
+    height: 8px;
+    width: 5px;
+    margin-right: 1px;
+    list-style: none;
+}
+.hud .resource i {
+    font-size: 20px;
+    vertical-align: super;
+}
+.hud .brand {
+    float: left;
+    font-size: 40px;
+    padding-right: 10px;
+}
+.hud .phase_title {
+    font-size: 22px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 29px;
+    text-align: center;
+    padding-top: 20px;
+}
+.hud.bottom {
+    top: auto;
+    bottom: 0;
+    border: 1px solid #211;
+    background: black;
+    opacity: 0.8;
+    height: 36px;
+}
+.hud.bottom .orders, .hud.bottom .units {
+    margin: 0;
+    padding: 0;
+}
+.hud.bottom .orders li, .hud.bottom .units li {
+    background: white;
+    border-radius: 5px;
+    list-style: none;
+    display: block;
+    float: left;
+    color: black;
+    font-size: 25px;
+    width: 52px;
+    margin-right: 5px;
+    height: 36px;
+    z-index: 150;
+}
+.hud.bottom .units li {
+    text-align: center;
+}
+.hud.bottom .done {
+    display: block;
+    width: 70px;
+    right: 10px;
+    top: 10px;
+    background: #333;
+    border-radius: 5px;
+    position: absolute;
+    height: 30px;
+    padding-top: 6px;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+}
+.hud.bottom .done.active {
+    background: white;
+}
+.hud.bottom .orders li:hover,
+.hud.bottom .orders li.active,
+.hud.bottom .done.active:hover,
+.hud.bottom .units li:hover,
+.hud.bottom .units li.active
+{
+    background: yellow;
+    cursor: pointer;
+}
+.hud.bottom .orders li.used, .hud.bottom .units li.used {
+    background: #999;
+}
+.hud.bottom .orders li.blocked {
+    cursor: auto;
+    background: #333;
+}
+.hud.bottom .orders li.common {
+    text-align: center;
+}
+.hud.bottom .orders li .holder {
+    position: relative;
+}
+.hud.bottom .orders li .icon {
+    top: 2px;
+    position: relative;
+    left: 2px;
+}
+.hud.bottom .orders li.common .icon {
+    left: 0;
+}
+.hud.bottom .orders li .bonus {
+    vertical-align: sub;
+    font-size: 18px;
+}
+.hud.bottom .orders li .star {
+    vertical-align: super;
+    font-size: 13px;
+    position: absolute;
+    top: 3px;
+    left: 30px;
+    z-index: 150;
+    display: block;
+}
+.map_padder {
+    padding: 20000px;
+}
+
+.unit {
+    height: 27px;
+    margin-top: 4px;
+}
+

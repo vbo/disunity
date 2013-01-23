@@ -1,0 +1,1452 @@
+{
+    "houses": {
+        "1": {
+            "name": "Baratheon",
+            "home": 59,
+            "style": {
+                "fill": "#DFDF38",
+                "stroke": "#7C7C00"
+            },
+            "army": {
+                "56": [3, 3],
+                "59": [1, 2],
+                "27": [1]
+            },
+            "resources": {
+                "supplies": 2,
+                "forts": 1,
+                "power": 5,
+                "crowns": 1
+            },
+            "track":{
+                "throne":1,
+                "blade":5,
+                "raven":4
+            },
+            "cards":[
+                {
+                    "name":"Stannis Baratheon",
+                    "strength":4,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If your opponent has a higher position on the IT Influence track than you, this card gains +1 CS."
+                },
+                {
+                    "name":"Renly Baratheon",
+                    "strength":3,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you win this combat you may upgrade one of your participating/supporting FM to KN."
+                },
+                {
+                    "name":"Ser Davos Seaworth",
+                    "strength":2,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If Stannis Baratheon House card is in your discard pile, this card gains +1 CS and sword icon."
+                },
+                {
+                    "name":"Brienne of Tarth",
+                    "strength":2,
+                    "swords":1,
+                    "fortresses":1,
+                    "description":""
+                },
+                {
+                    "name":"Melisandre",
+                    "strength":1,
+                    "swords":1,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Salladhor Saan",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are being supported in this combat, the CS of all non-Baratheon Ships is reduced to 0."
+                },
+                {
+                    "name":"Patchface",
+                    "strength":0,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"After combat you may look at your opponent's hand and discard one card of your choice."
+                }
+            ]
+        },
+        "2": {
+            "name": "Lannister",
+            "home": 19,
+            "style": {
+                "fill": "#ff7373",
+                "stroke": "#cc0909"
+            },
+            "army": {
+                "19": [1, 2],
+                "51": [3],
+                "21": [1]
+            },
+            "resources": {
+                "supplies": 2,
+                "forts": 1,
+                "power": 5,
+                "crowns": 1
+            },
+            "track":{
+                "throne":2,
+                "blade":6,
+                "raven":1
+            },
+            "cards":[
+                {
+                    "name":"Tywin Lannister",
+                    "strength":4,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you win this combat gain two Power tokens."
+                },
+                {
+                    "name":"Ser Gregor Clegane",
+                    "strength":3,
+                    "swords":3,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"The Hound",
+                    "strength":2,
+                    "swords":0,
+                    "fortresses":2,
+                    "description":""
+                },
+                {
+                    "name":"Ser Jaime Lannister",
+                    "strength":2,
+                    "swords":1,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Tyrion Lannister",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"You may immediately cancel your opponent's chosen House card and return it to his hand. He must then choose a different House card to reveal. If he has no other House cards in hand, he cannot use a House card this combat."
+                },
+                {
+                    "name":"Ser Kevan Lannister",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are attacking all of your participating FM add +2 CS instead of +1."
+                },
+                {
+                    "name":"Cersei Lannister",
+                    "strength":0,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you win this combat you may remove one of the opponent's Order tokens from anywhere on the board."
+                }
+            ]
+        },
+        "3": {
+            "name": "Stark",
+            "home": 3,
+            "style": {
+                "fill": "#ddd",
+                "stroke": "#5a5a5a"
+            },
+            "army": {
+                "3":  [1, 2],
+                "4":  [1],
+                "47": [3]
+            },
+            "resources": {
+                "supplies": 1,
+                "forts": 2,
+                "power": 5,
+                "crowns": 1
+            },
+            "track":{
+                "throne":3,
+                "blade":4,
+                "raven":2
+            },
+            "cards":[
+                {
+                    "name":"Eddard Stark",
+                    "strength":4,
+                    "swords":2,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Robb Stark",
+                    "strength":3,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you win this combat you may choose the area to which your opponent retreats."
+                },
+                {
+                    "name":"Roose Bolton",
+                    "strength":2,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you lose this combat, return your entire House card discard pile into your hand (incl. this card)."
+                },
+                {
+                    "name":"Greatjon Umber",
+                    "strength":2,
+                    "swords":1,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Ser Rodrick Cassel",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":2,
+                    "description":""
+                },
+                {
+                    "name":"The Blackfish",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"You don't take casualties in this combat from House card abilities, Combat icons, or Tides of Battle cards."
+                },
+                {
+                    "name":"Catelyn Stark",
+                    "strength":0,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you have a Defence order token in the embattled area its value is doubled."
+                }
+            ]
+        },
+        "4": {
+            "name": "Tyrell",
+            "home": 29,
+            "style": {
+                "fill": "#0f7015",
+                "stroke": "#2eac36"
+            },
+            "army": {
+                "29": [1, 2],
+                "32": [1],
+                "52": [3]
+            },
+            "resources": {
+                "supplies": 2,
+                "forts": 1,
+                "power": 5,
+                "crowns": 1
+            },
+            "track":{
+                "throne":6,
+                "blade":2,
+                "raven":5
+            },
+            "cards":[
+                {
+                    "name":"Mace Tyrell",
+                    "strength":4,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"Immediately destroy one of your opponent's attacking or defending Footmen units."
+                },
+                {
+                    "name":"Ser Loras Tyrell",
+                    "strength":3,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are attacking and win this combat, Move the March Order token into the conquered area."
+                },
+                {
+                    "name":"Ser Garlan Tyrell",
+                    "strength":2,
+                    "swords":2,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Randyll Tarly",
+                    "strength":2,
+                    "swords":1,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Alester Florent",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":1,
+                    "description":""
+                },
+                {
+                    "name":"Margaery Tyrell",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":1,
+                    "description":""
+                },
+                {
+                    "name":"Queen of Thorns",
+                    "strength":0,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"Immediately remove one of your opponent's Order tokens in any area adjacent to the embattled area. You may not remove the March Order token used to start this combat."
+                }
+            ]
+        },
+        "5": {
+            "name": "Greyjoy",
+            "home": 14,
+            "style": {
+                "fill": "#8b88bf",
+                "stroke": "#3933a6"
+            },
+            "army": {
+                "14": [1, 2],
+                "15": [3],
+                "50": [3],
+                "9":  [1]
+            },
+            "track":{
+                "throne":5,
+                "blade":1,
+                "raven":6
+            },
+            "resources": {
+                "supplies": 2,
+                "forts": 1,
+                "power": 5,
+                "crowns": 1
+            },
+            "cards":[
+                {
+                    "name":"Euron Crow's Eye",
+                    "strength":4,
+                    "swords":1,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Victarion Greyjoy",
+                    "strength":3,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are attacking, all of your participating Ships add +2 to CS instead of +1."
+                },
+                {
+                    "name":"Theon Greyjoy",
+                    "strength":2,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are defending an area that contains a Stronghold/Castle, this card gains +1 CS and sword icon."
+                },
+                {
+                    "name":"Balon Greyjoy",
+                    "strength":2,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"The printed combat strength of your opponent's House card is reduced to 0."
+                },
+                {
+                    "name":"Asha Greyjoy",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are NOT being supported in this combat, this card gains two sword icons and one fortification icon."
+                },
+                {
+                    "name":"Dagmar Cleftjaw",
+                    "strength":1,
+                    "swords":1,
+                    "fortresses":1,
+                    "description":""
+                },
+                {
+                    "name":"Aeron Damphair",
+                    "strength":0,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"You may immediately discard two of your available Power tokens to discard Aeron Damphair and choose a different House Card from your hand (if able)."
+                }
+            ]
+        },
+        "6": {
+            "name": "Martell",
+            "home": 42,
+            "style": {
+                "fill": "#ffb273",
+                "stroke": "#ff7400"
+            },
+            "army": {
+                "42": [1, 2],
+                "41": [1],
+                "55": [3]
+            },
+            "resources": {
+                "supplies": 2,
+                "forts": 1,
+                "power": 5,
+                "crowns": 1
+            },
+            "track":{
+                "throne":4,
+                "blade":3,
+                "raven":3
+            },
+            "cards":[
+                {
+                    "name":"The Red Viper",
+                    "strength":4,
+                    "swords":2,
+                    "fortresses":1,
+                    "description":""
+                },
+                {
+                    "name":"Areo Hotah",
+                    "strength":3,
+                    "swords":0,
+                    "fortresses":1,
+                    "description":""
+                },
+                {
+                    "name":"Obara Sand",
+                    "strength":2,
+                    "swords":1,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Darkstar",
+                    "strength":2,
+                    "swords":1,
+                    "fortresses":0,
+                    "description":""
+                },
+                {
+                    "name":"Nymeria Sand",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are defending, this card gains a fortification icon. If you are attacking, this card gains a sword icon."
+                },
+                {
+                    "name":"Arianne Martel",
+                    "strength":1,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"If you are defending and lose this combat, your opponent may not move his units into embattled area. They return to the area from which they marched. Your own units must still retreat."
+                },
+                {
+                    "name":"Doran Martell",
+                    "strength":0,
+                    "swords":0,
+                    "fortresses":0,
+                    "description":"Immediately move your opponent to the bottom of one Influence track of your choice."
+                }
+            ]
+        }
+    },
+    "stars": {
+        "3": [3, 2, 1],
+        "4": [3, 2, 1, 0],
+        "5": [3, 3, 2, 1, 0],
+        "6": [3, 3, 2, 1, 0, 0]
+    },
+    "orders": {
+        "11": {
+            "name": "Basic Raid",
+            "star": 0,
+            "count": 2,
+            "icon": "magnet"
+        },
+        "12": {
+            "name": "Raid Star",
+            "star": 1,
+            "count": 1,
+            "icon": "magnet"
+        },
+        "21": {
+            "name": "Weak March",
+            "star": 0,
+            "bonus": -1,
+            "count": 1,
+            "icon": "move"
+        },
+        "22": {
+            "name": "Basic March",
+            "star": 0,
+            "bonus": 0,
+            "count": 1,
+            "icon": "move"
+        },
+        "23": {
+            "name": "March Star",
+            "star": 1,
+            "bonus": 1,
+            "count": 1,
+            "icon": "move"
+        },
+        "31": {
+            "name": "Basic Defense",
+            "star": 0,
+            "bonus": 1,
+            "count": 2,
+            "icon": "signal"
+        },
+        "32": {
+            "name": "Defense Star",
+            "star": 1,
+            "bonus": 2,
+            "count": 1,
+            "icon": "signal"
+        },
+        "41": {
+            "name": "Basic Support",
+            "star": 0,
+            "bonus": 0,
+            "count": 2,
+            "icon": "screenshot"
+        },
+        "42": {
+            "name": "Support Star",
+            "star": 1,
+            "bonus": 1,
+            "count": 1,
+            "icon": "screenshot"
+        },
+        "51": {
+            "name": "Basic Power",
+            "star": 0,
+            "count": 2,
+            "icon": "bolt"
+        },
+        "52": {
+            "name": "Power Star",
+            "star": 1,
+            "count": 1,
+            "icon": "bolt"
+        }
+    },
+    "regions": {
+        "1": {
+            "type": 1,
+            "name": "Castle Black",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [2, 3, 46, 47],
+            "style": {
+                "x": 793,
+                "y": 92
+            }
+        },
+        "2": {
+            "type": 1,
+            "name": "Karhold",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [1, 3, 47],
+            "style": {
+                "x": 902,
+                "y": 205
+            }
+        },
+        "3": {
+            "type": 1,
+            "name": "Winterfell",
+            "crowns": 1,
+            "fort": 3,
+            "supplies": 1,
+            "neighs": [1, 2, 4, 57, 47, 46, 7, 10],
+            "style": {
+                "x": 766,
+                "y": 354
+            }
+        },
+        "4": {
+            "type": 1,
+            "name": "White Harbor",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [3, 6, 5, 47, 49, 10],
+            "style": {
+                "x": 957,
+                "y": 416
+            }
+        },
+        "5": {
+            "type": 3,
+            "name": "White Harbor-port",
+            "town": 4,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [4, 49],
+            "style": {
+                "x": 991,
+                "y": 526
+            }
+        },
+        "6": {
+            "type": 1,
+            "name": "Widow's watch",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [4, 47, 49],
+            "style": {
+                "x": 1144,
+                "y": 402
+            }
+        },
+        "7": {
+            "type": 1,
+            "name": "The Stony Shore",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [3, 46],
+            "style": {
+                "x": 552,
+                "y": 334
+            }
+        },
+        "8": {
+            "type": 1,
+            "name": "Flint's Finger",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [48, 46, 50, 9],
+            "style": {
+                "x": 217,
+                "y": 492
+            }
+        },
+        "9": {
+            "type": 1,
+            "name": "Greywater Watch",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [8, 50, 46, 10, 11],
+            "style": {
+                "x": 385,
+                "y": 323
+            }
+        },
+        "10": {
+            "type": 1,
+            "name": "Moat Cailin",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [3, 4, 9, 49, 11, 12],
+            "style": {
+                "x": 807,
+                "y": 561
+            }
+        },
+        "11": {
+            "type": 1,
+            "name": "SeaGuard",
+            "crowns": 1,
+            "fort": 3,
+            "supplies": 1,
+            "neighs": [10, 12, 9, 18, 50],
+            "style": {
+                "x": 643,
+                "y": 597
+            }
+        },
+        "12": {
+            "type": 1,
+            "name": "The twins",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [10, 11, 13, 16, 49],
+            "style": {
+                "x": 735,
+                "y": 734
+            }
+        },
+        "13": {
+            "type": 1,
+            "name": "The Fingers",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [12, 49, 16],
+            "style": {
+                "x": 930,
+                "y": 776
+            }
+        },
+        "14": {
+            "type": 1,
+            "name": "Pyke",
+            "crowns": 1,
+            "fort": 3,
+            "supplies": 1,
+            "neighs": [50, 15],
+            "style": {
+                "x": 422,
+                "y": 464
+            }
+        },
+        "15": {
+            "type": 3,
+            "name": "Pyke-port",
+            "town": 14,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [14, 50],
+            "style": {
+                "x": 521,
+                "y": 548
+            }
+        },
+        "16": {
+            "type": 1,
+            "name": "The Mountains of the moon",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [12, 13, 49, 17, 23],
+            "style": {
+                "x": 850,
+                "y": 927
+            }
+        },
+        "17": {
+            "type": 1,
+            "name": "The Eyrie",
+            "crowns": 1,
+            "fort": 2,
+            "supplies": 1,
+            "neighs": [16, 49],
+            "style": {
+                "x": 1059,
+                "y": 895
+            }
+        },
+        "18": {
+            "type": 1,
+            "name": "Riverrun",
+            "crowns": 1,
+            "fort": 3,
+            "supplies": 1,
+            "neighs": [11, 50, 51, 19, 21, 22],
+            "style": {
+                "x": 567,
+                "y": 752
+            }
+        },
+        "19": {
+            "type": 1,
+            "name": "Lannisport",
+            "crowns": 0,
+            "fort": 3,
+            "supplies": 2,
+            "neighs": [18, 51, 21, 20, 24],
+            "style": {
+                "x": 342,
+                "y": 830
+            }
+        },
+        "20": {
+            "type": 3,
+            "name": "Lannisport-port",
+            "town": 19,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [19, 51],
+            "style": {
+                "x": 179,
+                "y": 889
+            }
+        },
+        "21": {
+            "type": 1,
+            "name": "Stoney Sept",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [18, 19, 22, 25, 24],
+            "style": {
+                "x": 515,
+                "y": 883
+            }
+        },
+        "22": {
+            "type": 1,
+            "name": "Harrenhal",
+            "crowns": 1,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [18, 21, 23, 25],
+            "style": {
+                "x": 683,
+                "y": 964
+            }
+        },
+        "23": {
+            "type": 1,
+            "name": "Crackclaw Point",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [16, 22, 25, 26, 58, 56, 49],
+            "style": {
+                "x": 1066,
+                "y": 1085
+            }
+        },
+        "24": {
+            "type": 1,
+            "name": "Searoad Marches",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [19, 21, 51, 48, 53, 25, 28, 29],
+            "style": {
+                "x": 101,
+                "y": 1052
+            }
+        },
+        "25": {
+            "type": 1,
+            "name": "Blackwater",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 2,
+            "neighs": [21, 23, 22, 24, 26, 28],
+            "style": {
+                "x": 422,
+                "y": 1055
+            }
+        },
+        "26": {
+            "type": 1,
+            "name": "King's landing",
+            "crowns": 2,
+            "fort": 3,
+            "supplies": 0,
+            "neighs": [23, 25, 58, 27, 28],
+            "style": {
+                "x": 636,
+                "y": 1137
+            }
+        },
+        "27": {
+            "type": 1,
+            "name": "Kingswood",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [26, 58, 56, 28, 33, 34],
+            "style": {
+                "x": 797,
+                "y": 1276
+            }
+        },
+        "28": {
+            "type": 1,
+            "name": "The Reach",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [24, 25, 26, 27, 29, 32, 33],
+            "style": {
+                "x": 453,
+                "y": 1274
+            }
+        },
+        "29": {
+            "type": 1,
+            "name": "Highgaren",
+            "crowns": 0,
+            "fort": 3,
+            "supplies": 2,
+            "neighs": [24, 28, 32, 30, 52, 53],
+            "style": {
+                "x": 179,
+                "y": 1210
+            }
+        },
+        "30": {
+            "type": 1,
+            "name": "OldTown",
+            "crowns": 0,
+            "fort": 3,
+            "supplies": 0,
+            "neighs": [29, 52, 32, 36, 31],
+            "style": {
+                "x": 435,
+                "y": 1467
+            }
+        },
+        "31": {
+            "type": 3,
+            "name": "OldTown-port",
+            "town": 30,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [30, 52],
+            "style": {
+                "x": 252,
+                "y": 1358
+            }
+        },
+        "32": {
+            "type": 1,
+            "name": "Dornish Marches",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [28, 29, 30, 33, 37, 36],
+            "style": {
+                "x": 596,
+                "y": 1431
+            }
+        },
+        "33": {
+            "type": 1,
+            "name": "The Boneway",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [27, 28, 55, 34, 37, 40, 32],
+            "style": {
+                "x": 844,
+                "y": 1426
+            }
+        },
+        "34": {
+            "type": 1,
+            "name": "Storms End",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [27, 33, 56, 54, 55, 35],
+            "style": {
+                "x": 1136,
+                "y": 1350
+            }
+        },
+        "35": {
+            "type": 3,
+            "name": "Storms End-port",
+            "town": 34,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [34, 56],
+            "style": {
+                "x": 1237,
+                "y": 1472
+            }
+        },
+        "36": {
+            "type": 1,
+            "name": "Three Towers",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [30, 32, 37, 53, 52],
+            "style": {
+                "x": 419,
+                "y": 1665
+            }
+        },
+        "37": {
+            "type": 1,
+            "name": "Prince's Pass",
+            "crowns": 1,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [32, 33, 36, 39, 40],
+            "style": {
+                "x": 667,
+                "y": 1559
+            }
+        },
+        "39": {
+            "type": 1,
+            "name": "Starfall",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 1,
+            "neighs": [37, 40, 41, 53, 54],
+            "style": {
+                "x": 541,
+                "y": 1763
+            }
+        },
+        "40": {
+            "type": 1,
+            "name": "Yronwood",
+            "crowns": 0,
+            "fort": 2,
+            "supplies": 0,
+            "neighs": [33, 37, 39, 41, 42, 55],
+            "style": {
+                "x": 885,
+                "y": 1573
+            }
+        },
+        "41": {
+            "type": 1,
+            "name": "Salt Shore",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 1,
+            "neighs": [39, 40, 42, 54],
+            "style": {
+                "x": 762,
+                "y": 1736
+            }
+        },
+        "42": {
+            "type": 1,
+            "name": "Sunspear",
+            "crowns": 1,
+            "fort": 3,
+            "supplies": 1,
+            "neighs": [40, 41, 43, 54, 55],
+            "style": {
+                "x": 983,
+                "y": 1703
+            }
+        },
+        "43": {
+            "type": 3,
+            "name": "Sunspear-port",
+            "town": 42,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [42, 54],
+            "style": {
+                "x": 1126,
+                "y": 1731
+            }
+        },
+        "44": {
+            "type": 1,
+            "name": "The Arbor",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [53, 52],
+            "style": {
+                "x": 236,
+                "y": 1651
+            }
+        },
+        "45": {
+            "type": 3,
+            "name": "Dragonstone-port",
+            "town": 59,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [59, 56],
+            "style": {
+                "x": 1240,
+                "y": 931
+            }
+        },
+        "46": {
+            "type": 2,
+            "name": "Bay of Ice",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [1, 3, 57, 7, 8, 9, 48],
+            "style": {
+                "x": 284,
+                "y": 128
+            }
+        },
+        "47": {
+            "type": 2,
+            "name": "The Shivering Sea",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [1, 2, 3, 4, 6, 49],
+            "style": {
+                "x": 1251,
+                "y": 165
+            }
+        },
+        "48": {
+            "type": 2,
+            "name": "Sunset Sea",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [8, 24, 46, 50, 51, 53],
+            "style": {
+                "x": 36,
+                "y": 587
+            }
+        },
+        "49": {
+            "type": 2,
+            "name": "The Narrow Sea",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [4, 5, 6, 10, 12, 13, 16, 17, 23, 47, 56],
+            "style": {
+                "x": 1300,
+                "y": 628
+            }
+        },
+        "50": {
+            "type": 2,
+            "name": "Ironman's Bay",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [8, 9, 11, 14, 18, 15, 48, 51],
+            "style": {
+                "x": 292,
+                "y": 625
+            }
+        },
+        "51": {
+            "type": 2,
+            "name": "The Golden Sound",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [18, 19, 20, 24, 48, 50],
+            "style": {
+                "x": 156,
+                "y": 710
+            }
+        },
+        "52": {
+            "type": 2,
+            "name": "Redwyne Straights",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [29, 30, 31, 36, 44, 53],
+            "style": {
+                "x": 204,
+                "y": 1512
+            }
+        },
+        "53": {
+            "type": 2,
+            "name": "West Summer Sea",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [24, 29, 36, 39, 44, 48, 52, 54],
+            "style": {
+                "x": 53,
+                "y": 1791
+            }
+        },
+        "54": {
+            "type": 2,
+            "name": "East Summer Sea",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [34, 39, 41, 42, 43, 53, 55, 56],
+            "style": {
+                "x": 1254,
+                "y": 1885
+            }
+        },
+        "55": {
+            "type": 2,
+            "name": "Sea Of Dorne",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [33, 34, 40, 42, 54],
+            "style": {
+                "x": 1082,
+                "y": 1512
+            }
+        },
+        "56": {
+            "type": 2,
+            "name": "Shipbreaker Bay",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [23, 27, 34, 35, 59, 45, 49, 54, 58],
+            "style": {
+                "x": 1321,
+                "y": 1276
+            }
+        },
+        "57": {
+            "type": 3,
+            "name": "Winterfell-port",
+            "town": 3,
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [3, 46],
+            "style": {
+                "x": 676,
+                "y": 197
+            }
+        },
+        "58": {
+            "type": 2,
+            "name": "Blackwater Bay",
+            "crowns": 0,
+            "fort": 1,
+            "supplies": 0,
+            "neighs": [23, 26, 27, 56],
+            "style": {
+                "x": 956,
+                "y": 1181
+            }
+        },
+        "59": {
+            "type": 1,
+            "name": "Dragonstone",
+            "crowns": 1,
+            "fort": 3,
+            "supplies": 1,
+            "neighs": [56, 45],
+            "style": {
+                "x": 1193,
+                "y": 1076
+            }
+        }
+    },
+    "westeros":[
+        [
+            {
+                "name":"Supply",
+                "description":"Adjust supply",
+                "wildings":0,
+                "number":3
+            },
+            {
+                "name":"Mustering",
+                "description":"Muster units",
+                "wildings":0,
+                "number":3
+            },
+            {
+                "name":"Winter is Coming",
+                "description":"Reshuffle",
+                "wildings":0,
+                "number":1
+            },
+            {
+                "name":"Thrones of Blades",
+                "description":"Iron Throne holder chooses Mustering or Supply or none",
+                "wildings":1,
+                "number":2
+            },
+            {
+                "name":"Last Days of Summer",
+                "description":"Nothing happens",
+                "wildings":1,
+                "number":1
+            }
+        ],
+        [
+            {
+                "name":"Clash of Kings",
+                "description":"Bid power tokens on influence tracks",
+                "wildings":0,
+                "number":3
+            },
+            {
+                "name":"Game of Thrones",
+                "description":"Gain power tokens",
+                "wildings":0,
+                "number":3
+            },
+            {
+                "name":"Dark Wings, Dark Words",
+                "description":"Messenger Raven holder chooses: bid power tokens on influence tracks or gain power tokens or none",
+                "wildings":1,
+                "number":2
+            },
+            {
+                "name":"Winter is Coming",
+                "description":"Reshuffle",
+                "wildings":0,
+                "number":1
+            },
+            {
+                "name":"Last Days of Summer",
+                "description":"Nothing happens",
+                "wildings":1,
+                "number":1
+            }
+        ],
+        [
+            {
+                "name":"Wilding Attack",
+                "description":"Bid power tokens to fend off Wildling Attack",
+                "wildings":0,
+                "number":3
+            },
+            {
+                "name":"Sea of Storms",
+                "description":"No raid orders",
+                "wildings":1,
+                "number":1
+            },
+            {
+                "name":"Rains of Autumn",
+                "description":"No +1 march orders",
+                "wildings":1,
+                "number":1
+            },
+            {
+                "name":"Feast for Crows",
+                "description":"No consolidate power orders",
+                "wildings":1,
+                "number":1
+            },
+            {
+                "name":"Web of Lies",
+                "description":"No support orders",
+                "wildings":1,
+                "number":1
+            },
+            {
+                "name":"Storm of Swords",
+                "description":"No defence orders",
+                "wildings":1,
+                "number":1
+            },
+            {
+                "name":"Put to the Sword",
+                "description":"Valyrian Steel holder chooses: no +1 march orders or no defence orders or none",
+                "wildings":0,
+                "number":1
+            }
+        ]
+    ],
+    "wildlings":[
+        {
+            "name":"Crowkillers",
+            "high":"Upgrade 2 FM into KNs.",
+            "low":"KNs turn into FM. If unable to replace, the unit is destroyed.",
+            "else":"2 KNs turn into FM. If unable to replace, the unit is destroyed."
+        },
+        {
+            "name":"Silence at the Wall",
+            "high":"Nothing happens.",
+            "low":"Nothing Happens.",
+            "else":"Nothing Happens."
+        },
+        {
+            "name":"Mammoth Riders",
+            "high":"Retrieve one House Card from discard pile.",
+            "low":"Destroy 3 units anywhere.",
+            "else":"Destroy 2 units anywhere."
+        },
+        {
+            "name":"The Horde Descends",
+            "high":" May muster in any Castle/Stronghold. ",
+            "low":"Destroy 2 units at one of his Cities/ Strongholds; if unable then anywhere.",
+            "else":"Destroy 1 unit anywhere."
+        },
+        {
+            "name":"A King Beyond the Wall",
+            "high":"Moves to the top of Influence track of his choice.",
+            "low":"Move tokens to lowest position on every track.",
+            "else":"In turn order each player chooses Fiefdoms or KC and moves token to bottom of that track."
+        },
+        {
+            "name":"Rattleshirts Raiders",
+            "high":"Is increased 1 position on the Supply track.",
+            "low":"Is reduced 2 positions on the Supply track.",
+            "else":"Is reduced 1 position on the Supply track."
+        },
+        {
+            "name":"Preemptive Raid",
+            "high":"Wildlings attack again immediately with CS 6. You do not participate.",
+            "low":"Choose either a) Destroy two units b) Reduce 2 positions on highest track.",
+            "else":"Nothing Happens"
+        },
+        {
+            "name":"Skinchanger Scout",
+            "high":"All power bid on this attack is returned.",
+            "low":"Discard all available power tokens.",
+            "else":"Discards 2 available power tokens."
+        },
+        {
+            "name":"Massing on the Milkwater",
+            "high":"Returns all House Cards to hand.",
+            "low":"If >1 House Card in hand, discard all cards with the highest CS.",
+            "else":"If >1 House Card choose and discard one."
+        }
+    ],
+    "lords": {
+        "5": {
+                "26": 5,
+                "17": 6,
+                "37": 3,
+                "33": 3,
+                "36": 3,
+                "39": 3,
+                "40": 3,
+                "42": 5,
+                "41": 3
+        },
+        "4": {
+                "26": 5,
+                "17": 6,
+                "37": 3,
+                "33": 3,
+                "36": 3,
+                "39": 3,
+                "40": 3,
+                "42": 5,
+                "41": 3,
+                "34": 4,
+                "32": 3,
+                "30": 3
+        },
+        "3": {
+                "26": 5,
+                "17": 6,
+                "14": -1,
+                "29": -1,
+                "37": -1,
+                "34": -1,
+                "33": -1,
+                "36": -1,
+                "39": -1,
+                "40": -1,
+                "42": -1,
+                "41": -1,
+                "32": -1,
+                "30": -1
+        }
+    }
+}
+

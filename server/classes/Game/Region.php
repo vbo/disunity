@@ -1,0 +1,84 @@
+<?php
+
+class Game_RegionException extends Exception {
+    const WRONG_ARMY_MOVE = 1;
+}
+
+class Game_Region
+{
+    const Water = 2;
+    const Land = 1;
+    const Port = 3;
+
+    const None = 1;
+    const Castle = 2;
+    const Stronghold = 3;
+
+    public $id;
+    public $name;
+    public $type;
+    public $fort;
+    public $crowns;
+    public $supplies;
+    public $neighs = array();
+    public $town = null;
+    public $lord;
+    public $owner;
+    public $houseHome;
+    public $power;
+    public $army;
+
+    public $style;
+
+    public function __construct($id, $config, $army, $lord, $houseHome)
+    {
+        $this->lord = $lord;
+        if ($houseHome) {
+            $this->owner = $houseHome;
+            $this->power = 1;
+            $this->houseHome = 1;
+        }
+        if ($army) {
+            $hid = $army['hid'];
+            $units = $army['units'];
+            $this->army = new Game_Army($hid, $units);
+            $this->owner = $hid;
+        }
+        $this->id = $id;
+        foreach ($config as $k => $v) {
+            $this->{$k} = $v;
+        }
+    }
+
+    public function subUnits($units) {
+        if (!$this->army->sub($units)) {
+            $this->army = null;
+            if (!$this->power && !$this->army) {
+                $this->owner = null;
+            }
+        }
+    }
+
+    public function addUnits($hid, $units) {
+        if (!$this->army) {
+            $this->army = new Game_Army($hid, $units);
+            $this->owner = $hid;
+        } else {
+            if ($this->army->hid != $hid) {
+                throw new Game_RegionException("Wrong army move", Game_RegionException::WRONG_ARMY_MOVE);
+            }
+            $this->army->add($units);
+        }
+    }
+
+    public function setLord($str)
+    {
+        $this->lord = $str;
+    }
+
+    public function check($type)
+    {
+        return $this->type == $type;
+    }
+}
+
