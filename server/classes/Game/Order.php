@@ -24,12 +24,16 @@ class Game_Order
     const PowerBasic = 51;
     const PowerStar = 52;
 
+    // used for hacking around hidden/public information in Game::publish()
+    const Hidden = 100500;
+
     public $hid;
     public $id;
     public $name;
     public $type;
     public $star;
     public $bonus;
+    public $icon;
 
     public function __construct($hid, $config)
     {

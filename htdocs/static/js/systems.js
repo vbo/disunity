@@ -129,12 +129,14 @@
             this._order = $path.order(x, y, me);
 
             if (this.order != -1) {
-                this._order_glyph = $path.order_glyph(x, y, this.order.icon, me);
-                if (this.order.star) {
-                    this._order_star = $path.order_star(x, y, "star", me);
+                if (this.order.icon) {
+                    this._order_glyph = $path.order_glyph(x, y, this.order.icon, me);
+                    if (this.order.star) {
+                        this._order_star = $path.order_star(x, y, "star", me);
+                    }
+                    var str_bonus = number_format(this.order['bonus']);
+                    this._order_bonus = map.paper.text(x + 33, y - 8, str_bonus).attr("fill", this.fill);
                 }
-                var str_bonus = number_format(this.order['bonus']);
-                this._order_bonus = map.paper.text(x + 33, y - 8, str_bonus).attr("fill", this.fill);
             }
 
             this._order_anchor = $path.order(x, y, me).attr({"stroke-opacity": 0, "fill-opacity": 0});

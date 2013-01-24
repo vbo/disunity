@@ -66,7 +66,19 @@ class Game
 
     public function publish($hid)
     {
-        $hid; // todo: perform actual private data filtering
+        $hid; // todo: perform private data filtering without hacking
+        if ($this->stack->end() instanceof Game_Node_Planning) {
+            foreach ($this->map->regions as $region) {
+                $order = $region->order;
+                if ($order && $region->owner != $hid) {
+                    // substitute order params with some garbage to hide it from hacker
+                    $order->type = Game_Order::Hidden;
+                    $order->star = 0;
+                    $order->bonus = 0;
+                    $order->icon = '';
+                }
+            }
+        }
         return $this;
     }
 
@@ -123,4 +135,3 @@ class Game
         }
     }
 }
-
