@@ -5,8 +5,7 @@
         this.id = id;
         this.owner = conf['owner'];
         this.fort = conf.fort;
-        this.other_order = null;
-        this.order = null;
+        this.order = conf.order;
         this.units = null;
         this.order_click = null;
         this.click = null;
@@ -145,9 +144,6 @@
                 }
             });
         }
-        if (this.other_order) {
-            this._order = $path.order(x, y, me);
-        }
         this._planets.forEach(function (p) {
             p.redraw(x + p.dx, y + p.dy);
         });
@@ -226,18 +222,10 @@
 
     Systems.prototype = new SmartHash(System, 'update');
 
-    Systems.prototype.initPlanning = function (to_be_ordered, other_orders) {
-        // cleanup
-        this.each(function (sys) {
-            sys.order = null;
-            sys.other_order = null;
-            sys.order_click = null;
-        });
-        // setup
+    Systems.prototype.initPlanning = function (to_be_ordered) {
         this.eachFromList(function (sys) {
             sys.order = -1;
         }, to_be_ordered, true);
-        this.setProperty(other_orders, 'other_order', true);
     };
 
     Systems.prototype.setupPlanningOnClick = function (to_be_ordered, order_click) {
@@ -246,15 +234,7 @@
         }, to_be_ordered, true);
     };
 
-    Systems.prototype.initMarches = function (march_routes, orders) {
-        // cleanup
-        this.each(function (sys) {
-            sys.order = null;
-            sys.units = null;
-            sys.order_click = null;
-            sys.click = null;
-        });
-        // setup
+    Systems.prototype.initMarches = function (march_routes) {
         var systems = this;
         this.eachFromObj(function (sys, march) {
             march.sys = sys;
@@ -263,9 +243,6 @@
                 sys.sent_units = [];
             };
         }, march_routes, true);
-        this.eachFromObj(function (sys, order) {
-            sys.order = order;
-        }, orders, true);
     };
 
     Systems.prototype.marchHereSystemsReset = function (sids) {

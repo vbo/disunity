@@ -11,7 +11,6 @@ class Game_MapException extends Exception
 class Game_Map
 {
     public $regions = array();
-    public $orders = array();
 
     public function __construct($regions, $homeRegions, $armies, $lords)
     {
@@ -23,39 +22,41 @@ class Game_Map
 
     public function setOrders($orders)
     {
-        foreach ($orders as $region => $order) {
-            $this->setOrder($region, $order);
+        foreach ($orders as $rid => $order) {
+            $this->r($rid)->setOrder($order);
         }
     }
 
-    public function setOrder($region, $order)
+    public function unsetOrder($rid)
     {
-        $this->orders[$region] = $order;
+        $this->r($rid)->unsetOrder();
     }
 
-    public function unsetOrder($region)
+    public function order($rid)
     {
-        unset($this->orders[$region]);
+        return $this->r($rid)->order;
     }
 
-    public function order($region)
+    public function orders($hid=null, $type=null)
     {
-        return @$this->orders[$region];
-    }
-
-    public function orders($hid, $type=null)
-    {
-        return array_filter($this->orders, function($order) use ($hid, $type) {
-            if ($type && $order->type != $type) {
+        return array_map(function ($region) {
+                return $region->order;
+            }, array_filter($this->regions, function ($region) use ($hid, $type) {
+            $order = $region->order;
+            if (!$order || $type && $order->type != $type) {
                 return false;
             }
-            return $order->hid == $hid;
-        });
+            return is_null($hid) || $order->hid == $hid;
+        }));
     }
 
     public function otherOrders($hid)
     {
-        return array_keys(array_filter($this->orders, function($order) use ($hid) {
+        return array_keys(array_filter($this->regions, function($region) use ($hid) {
+            $order = $region->order;
+            if (!$order) {
+                return false;
+            }
             return $order->hid != $hid;
         }));
     }

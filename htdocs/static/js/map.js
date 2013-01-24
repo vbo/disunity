@@ -50,7 +50,7 @@
                 $('.hud .phase_title span').text("Action phase :: Marches");
                 if (data['cur_player'] == map.current_player['house']) {
                     console.log("you are current");
-                    return new map.MarchCtrl(world.systems, world.routes, map.state['map']['orders'], data);
+                    return new map.MarchCtrl(world.systems, world.routes, data);
                 } else {
                     console.log(data['cur_player'] + ' is current');
                 }

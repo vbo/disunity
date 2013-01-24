@@ -78,21 +78,16 @@ class Game_Node_March extends Game_Node
     private function _march($order, $source, $marches)
     {
         $fight = null;
-
-        $army = $this->_game->map->army($source);
-
-        if ($army->hid != $order->hid) {
-            throw new Game_Node_MarchException("Army hid error", Game_Node_MarchException::ARMY_HID);
-        }
+        $sregion = $this->_game->map->r($source);
 
         foreach ($marches as $rid => $units) {
             if (!$units) {
                 throw new Game_Node_MarchException("No force", Game_Node_MarchException::NO_FORCE);
             }
-            $army->sub($units);
+            $sregion->subUnits($units);
             $this->_game->map->assertMarchPossible($order->hid, $source, $rid);
-            $targetArmy = $this->_game->map->army($rid);
-            if ($targetArmy && $targetArmy->hid != $order->hid) {
+            $tregion = $this->_game->map->r($rid);
+            if ($tregion->army && $tregion->owner != $order->hid) {
                 if ($fight) {
                     throw new Game_Node_MarchException("There could be only one fight", Game_Node_MarchException::TOO_MANY_FIGHTS);
                 }
@@ -100,12 +95,7 @@ class Game_Node_March extends Game_Node
                 continue;
             }
 
-            $region = $this->_game->map->r($rid);
-            if (!$region->army) {
-                $region->army = new Game_Army($order->hid, $units);
-            } else {
-                $region->army->add($units);
-            }
+            $tregion->addUnits($order->hid, $units);
         }
 
         return $fight;

@@ -25,6 +25,7 @@ class Game_Army
             }
             array_splice($this->units, $place, 1);
         }
+        return $this->units;
     }
 
     public function add($units)

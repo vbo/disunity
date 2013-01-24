@@ -5,7 +5,6 @@
         this.systems = systems;
         this.hud = new map.PlanningHud();
         this.to_be_ordered = data['regions'];
-        this.other_orders = data['other_orders'];
         this.available_orders = data['available_orders'];
         this.player_orders = data['player_orders'];
         this.stars = data['stars'];
@@ -15,7 +14,7 @@
 
     PlanningCtrl.prototype.setup = function () {
         var ctrl = this;
-        this.systems.initPlanning(this.to_be_ordered, this.other_orders);
+        this.systems.initPlanning(this.to_be_ordered);
 
         this.hud.eventOrderSelected = function (order) {
             var on_click = function (clb) {

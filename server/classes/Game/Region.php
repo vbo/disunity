@@ -2,6 +2,7 @@
 
 class Game_RegionException extends Exception {
     const WRONG_ARMY_MOVE = 1;
+    const HERE_IS_NO_ARMY = 2;
 }
 
 class Game_Region
@@ -27,6 +28,7 @@ class Game_Region
     public $houseHome;
     public $power;
     public $army;
+    public $order = null;
 
     public $style;
 
@@ -50,7 +52,18 @@ class Game_Region
         }
     }
 
+    public function setOrder($order) {
+        $this->order = $order;
+    }
+
+    public function unsetOrder() {
+        $this->order = null;
+    }
+
     public function subUnits($units) {
+        if (!$this->army) {
+            throw new Game_RegionException("There is no army here: {$this->id}", Game_RegionException::HERE_IS_NO_ARMY);
+        }
         if (!$this->army->sub($units)) {
             $this->army = null;
             if (!$this->power && !$this->army) {

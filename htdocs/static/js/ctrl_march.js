@@ -1,10 +1,9 @@
 (function ($, map) {
     "use strict";
 
-    var MarchCtrl = map.MarchCtrl = function (systems, routes, orders, data) {
+    var MarchCtrl = map.MarchCtrl = function (systems, routes, data) {
         this.systems = systems;
         this.routes = routes;
-        this.orders = orders;
         this.available_routes = data['routes'];
         this.hud = new map.MarchHud();
 
@@ -88,7 +87,7 @@
             };
         };
 
-        this.systems.initMarches(this.available_routes, this.orders);
+        this.systems.initMarches(this.available_routes);
     };
 
     MarchCtrl.prototype.routesToHighlight = function (routes) {

@@ -100,9 +100,9 @@ $requests = array(
             $node = $game->stack->end();
             return $node instanceof Game_Node_Planning
                 && count($node->turns) == 1
-                && isset($game->map->orders[56])
-                && isset($game->map->orders[59])
-                && isset($game->map->orders[27]);
+                && isset($game->map->r(56)->order)
+                && isset($game->map->r(59)->order)
+                && isset($game->map->r(27)->order);
         }
     ),
 
@@ -126,9 +126,9 @@ $requests = array(
             $node = $game->stack->end();
             return $node instanceof Game_Node_Planning
                 && count($node->turns) == 2
-                && isset($game->map->orders[19])
-                && isset($game->map->orders[51])
-                && isset($game->map->orders[21]);
+                && isset($game->map->r(19)->order)
+                && isset($game->map->r(51)->order)
+                && isset($game->map->r(21)->order);
         }
     ),
 
@@ -151,9 +151,9 @@ $requests = array(
         )), function($game) {
             $node = $game->stack->end();
             return $node instanceof Game_Node_Raid
-                && isset($game->map->orders[3])
-                && isset($game->map->orders[4])
-                && isset($game->map->orders[47]);
+                && isset($game->map->r(3)->order)
+                && isset($game->map->r(4)->order)
+                && isset($game->map->r(47)->order);
         }
     ),
 
