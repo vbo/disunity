@@ -1,6 +1,6 @@
 <?php
 
-class Game_Order
+class Game_Order extends Game_Entity
 {
     const Raid = 1;
     const March = 2;
@@ -34,6 +34,8 @@ class Game_Order
     public $star;
     public $bonus;
     public $icon;
+
+    protected static $exportProps = array('hid', 'id', 'name', 'type', 'star', 'bonus', 'icon');
 
     public function __construct($hid, $config)
     {

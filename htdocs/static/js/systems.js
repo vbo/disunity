@@ -202,8 +202,9 @@
     var Systems = map.Systems = function (players, map_config, neighs) {
         var me = this;
         each(map_config, function(sid, sys_config) {
+            sid = parseInt(sid);
             var sys = new System(sid, sys_config);
-            sys.neighs.forEach(function (n) {
+            each(sys.neighs, function (k, n) {
                 var pair = [sid, n].sort();
                 neighs[pair.join('_')] = pair;
             });

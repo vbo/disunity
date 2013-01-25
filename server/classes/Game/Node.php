@@ -40,5 +40,8 @@ abstract class Game_Node
     {
         // pass
     }
+
+    public function filterExportGame($exportGame, $hid) {
+    }
 }
 

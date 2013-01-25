@@ -5,7 +5,7 @@ class Game_RegionException extends Exception {
     const HERE_IS_NO_ARMY = 2;
 }
 
-class Game_Region
+class Game_Region extends Game_Entity
 {
     const Water = 2;
     const Land = 1;
@@ -25,20 +25,23 @@ class Game_Region
     public $town = null;
     public $lord;
     public $owner;
-    public $houseHome;
+    public $homeland;
     public $power;
     public $army;
     public $order = null;
 
     public $style;
 
-    public function __construct($id, $config, $army, $lord, $houseHome)
+    protected static $exportProps = array('id', 'name', 'type', 'fort', 'crowns', 'supplies', 'neighs',
+                                             'town', 'lord', 'owner', 'homeland', 'power', 'army', 'order', 'style');
+
+    public function __construct($id, $config, $army, $lord, $homeland)
     {
         $this->lord = $lord;
-        if ($houseHome) {
-            $this->owner = $houseHome;
+        if ($homeland) {
+            $this->owner = $homeland;
             $this->power = 1;
-            $this->houseHome = 1;
+            $this->homeland = 1;
         }
         if ($army) {
             $hid = $army['hid'];

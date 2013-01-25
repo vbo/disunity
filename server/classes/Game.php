@@ -5,7 +5,7 @@ class Game_StateException extends Exception
     const HOUSE_NOT_FOUND = 10;
 }
 
-class Game
+class Game extends Game_Entity
 {
     /**
      * @var Game_Map
@@ -38,6 +38,8 @@ class Game
      */
     public $round;
 
+    protected static $exportProps = array('map', 'players', 'tracks', 'round');
+
     public function __construct(Game_Storage $storage, $playersNumber, $config)
     {
         $this->stack = new Game_NodeStack();
@@ -66,20 +68,9 @@ class Game
 
     public function publish($hid)
     {
-        $hid; // todo: perform private data filtering without hacking
-        if ($this->stack->end() instanceof Game_Node_Planning) {
-            foreach ($this->map->regions as $region) {
-                $order = $region->order;
-                if ($order && $region->owner != $hid) {
-                    // substitute order params with some garbage to hide it from hacker
-                    $order->type = Game_Order::Hidden;
-                    $order->star = 0;
-                    $order->bonus = 0;
-                    $order->icon = '';
-                }
-            }
-        }
-        return $this;
+        $exportGame = $this->export();
+        $this->stack->end()->filterExportGame($exportGame, $hid);
+        return $exportGame;
     }
 
     public function turn($hid, array $request)

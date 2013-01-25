@@ -8,9 +8,11 @@ class Game_MapException extends Exception
     const WRONG_POWER_REGION = 4;
 }
 
-class Game_Map
+class Game_Map extends Game_Entity
 {
     public $regions = array();
+
+    protected static $exportProps = array('regions');
 
     public function __construct($regions, $homeRegions, $armies, $lords)
     {

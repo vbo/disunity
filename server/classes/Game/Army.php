@@ -5,10 +5,12 @@ class Game_ArmyException extends Exception
     const LACK_OF_UNITS = 1;
 }
 
-class Game_Army
+class Game_Army extends Game_Entity
 {
     public $hid;
     public $units;
+
+    protected static $exportProps = array('hid', 'units');
 
     public function __construct($hid, $units)
     {

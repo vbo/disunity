@@ -27,5 +27,19 @@ class Game_Node_Planning extends Game_Node
             'stars' => $this->_game->tracks->stars($hid)
         );
     }
+
+    public function filterExportGame(&$exportGame, $hid) {
+        $regions = &$exportGame['map']['regions'];
+        foreach ($regions as $rid => $region) {
+            $order = &$regions[$rid]['order'];
+            if ($order && $regions[$rid]['owner'] != $hid) {
+                // substitute order params with some garbage to hide it from hacker
+                $order['type'] = Game_Order::Hidden;
+                $order['star'] = 0;
+                $order['bonus'] = 0;
+                $order['icon'] = '';
+            }
+        }
+    }
 }
 

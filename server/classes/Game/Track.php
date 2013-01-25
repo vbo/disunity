@@ -1,6 +1,6 @@
 <?php
 
-class Game_Track
+class Game_Track extends Game_Entity
 {
     const Throne = 'throne';
     const Blade = 'blade';
@@ -14,6 +14,8 @@ class Game_Track
 
     public $tracks = array();
     public $stars = array();
+
+    protected static $exportProps = array('tracks', 'stars');
 
     public function __construct($players, $stars)
     {

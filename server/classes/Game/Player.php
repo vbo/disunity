@@ -4,7 +4,7 @@ class Game_PlayerException extends Exception {
     const NO_POWER = 8;
 }
 
-class Game_Player
+class Game_Player extends Game_Entity
 {
     public $house;
     public $name;
@@ -13,6 +13,8 @@ class Game_Player
     public $cards;
     public $resources;
     public $style;
+
+    protected static $exportProps = array('house', 'name', 'home', 'track', 'cards', 'resources', 'style');
 
     public function __construct($house, $config)
     {
