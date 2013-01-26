@@ -91,7 +91,7 @@ class Game_Node_March extends Game_Node
                 if ($fight) {
                     throw new Game_Node_MarchException("There could be only one fight", Game_Node_MarchException::TOO_MANY_FIGHTS);
                 }
-                $fight = new Game_Node_Fight($units, $source, $rid);
+                $fight = new Game_Node_Fight($units, $sregion, $tregion);
                 continue;
             }
 
@@ -103,6 +103,13 @@ class Game_Node_March extends Game_Node
 
     public function childFinished($node)
     {
+        if ($node instanceof Game_Node_Fight) {
+            if ($node->winner == $this->cur) {
+                $node->target->addUnits($node->units);
+            } else {
+                $node->source->addUnits($this->cur, $node->units);
+            }
+        }
         return $this->_next();
     }
 }

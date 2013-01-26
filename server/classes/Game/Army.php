@@ -7,6 +7,20 @@ class Game_ArmyException extends Exception
 
 class Game_Army extends Game_Entity
 {
+    const Troopers = 1;
+    const Cruiser = 2;
+    const Robot = 3;
+    const Station = 4;
+
+    public static $forceTable = array(
+        self::Troopers => 1,
+        self::Cruiser => 2,
+        self::Robot => 1,
+        self::Station => 0
+    );
+
+    const STATION_FORT_ATTACK_BONUS = 4;
+
     public $hid;
     public $units;
 
@@ -35,6 +49,32 @@ class Game_Army extends Game_Entity
         foreach ($units as $unit) {
             array_push($this->units, $unit);
         }
+    }
+
+    public static function unitForce($unit, $isAttack=false, $fort=Game_Region::None)
+    {
+        if ($isAttack && $unit == self::Station && $fort != Game_Region::None) {
+            return self::STATION_FORT_ATTACK_BONUS;
+        }
+        return self::$forceTable[$unit];
+    }
+
+    public static function attackForce($units, $fort)
+    {
+        $force = 0;
+        foreach ($units as $unit) {
+            $force += self::unitForce($unit, true, $fort);
+        }
+        return $force;
+    }
+
+    public static function defenceForce($units)
+    {
+        $force = 0;
+        foreach ($units as $unit) {
+            $force += self::unitForce($unit);
+        }
+        return $force;
     }
 }
 

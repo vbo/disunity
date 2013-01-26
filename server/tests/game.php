@@ -93,9 +93,9 @@ $requests = array(
 
     array(House::Baratheon, array(
         'orders' => array(
-            56 => Game_Order::MarchStar,
-            59 => Game_Order::MarchBasic,
-            27 => Game_Order::RaidBasic,
+            56 => Game_Order::MarchBasic,
+            59 => Game_Order::MarchStar,
+            27 => Game_Order::MarchWeak,
         )), function($game) {
             $node = $game->stack->end();
             return $node instanceof Game_Node_Planning
@@ -120,7 +120,7 @@ $requests = array(
     array(House::Lannister, array(
         'orders' => array(
             19 => Game_Order::MarchStar,
-            51 => Game_Order::MarchBasic,
+            51 => Game_Order::RaidStar,
             21 => Game_Order::MarchWeak,
         )), function($game) {
             $node = $game->stack->end();
@@ -146,8 +146,8 @@ $requests = array(
     array(House::Stark, array(
         'orders' => array(
             3 => Game_Order::MarchBasic,
-            4 => Game_Order::MarchStar,
-            47 => Game_Order::MarchWeak
+            4 => Game_Order::DefenseBasic,
+            47 => Game_Order::SupportStar
         )), function($game) {
             $node = $game->stack->end();
             return $node instanceof Game_Node_Raid
@@ -159,13 +159,13 @@ $requests = array(
 
     // -------------------------------------------------- RAID
 
-    array(House::Baratheon, array(
-            'source' => 27,
+    array(House::Lannister, array(
+            'source' => 51,
             'skip' => true,
         ), function($game) {
             $node = $game->stack->end();
             return $node instanceof Game_Node_March
-                && !isset($game->map->orders[House::Baratheon][27]);
+                && !isset($game->map->orders[House::Lannister][51]);
         }
     ),
 
@@ -229,58 +229,11 @@ $requests = array(
                 && $e->getCode() == Game_MapException::NO_WAY;
         }
     ),
+
     array(House::Baratheon, array(
-        'source' => 56,
-        'marches' => array(
-            58 => array(3),
-        ),
-    )),
-    array(House::Lannister, array(
-        'source' => 51,
-        'marches' => array(
-            50 => array(3)
-        ),
-    )),
-    array(House::Stark, array(
-        'source' => 3,
-        'marches' => array(
-            1 => array(1),
-            4 => array(2)
-        ))
-    ),
-    array(House::Baratheon, array(
-        'source' => 59,
-        'marches' => array(
-            26 => array(1),
-            23 => array(2),
-        ))
-    ),
-    array(House::Lannister, array(
-        'source' => 19,
-        'marches' => array(
-            18 => array(2)
-        ))
-    ),
-    array(House::Stark, array(
-        'source' => 4,
-        'marches' => array(
-            3 => array(1),
-            2 => array(2)
-        ),
-        'power' => true), function ($game) {
-            return $game->map->r(4)->power;
-        }
-    ),
-    array(House::Lannister, array(
-        'source' => 21,
-        'marches' => array(
-            22 => array(1)
-        ))
-    ),
-    array(House::Stark, array(
-            'source' => 47,
+            'source' => 56,
             'marches' => array(
-                49 => array(3),
+                49 => array(1)
             ),
             'power' => true
         ), null, function($game, $e) {
@@ -288,11 +241,93 @@ $requests = array(
                 && $e->getCode() == Game_MapException::WRONG_POWER_REGION;
         }
     ),
-    array(House::Stark, array(
-        'source' => 47,
+    array(House::Baratheon, array(
+        'source' => 56,
         'marches' => array(
             49 => array(3),
-        )),
+        ),
+    )),
+    array(House::Lannister, array(
+        'source' => 19,
+        'marches' => array(
+            18 => array(2)
+        ))
+    ),
+    array(House::Stark, array(
+        'source' => 3,
+        'marches' => array(
+            10 => array(2),
+            2 => array(1)
+        ))
+    ),
+    array(House::Baratheon, array(
+        'source' => 27,
+        'marches' => array(
+            59 => array(1),
+        ))
+    ),
+    array(House::Lannister, array(
+        'source' => 21,
+        'marches' => array(
+            22 => array(1)
+        ))
+    ),
+    array(House::Baratheon, array(
+        'source' => 59,
+        'marches' => array(
+            4 => array(1, 2, 1),
+        )), function ($game) {
+            $node = $game->stack->end();
+            $bonuses = $node->bonuses;
+            return $node instanceof Game_Node_Support
+                && $node->attacker = House::Baratheon
+                && $node->defender = House::Stark
+                && $node->region->id = 4
+                && $bonuses[House::Stark]['order'] == 1
+                && $bonuses[House::Stark]['force'] == 1
+                && $bonuses[House::Baratheon]['order'] == 1
+                && $bonuses[House::Baratheon]['force'] == 4;
+        }
+    ),
+    array(House::Stark, array(
+            'hid' => House::Baratheon,
+            'rids' => array(47)
+        ), null, function ($game, $e) {
+            return $e instanceof Game_Node_SupportExceptionWrongHouse;
+        }
+    ),
+    array(House::Stark, array(
+            'hid' => House::Lannister,
+            'rids' => array(47)
+        ), null, function ($game, $e) {
+            return $e instanceof Game_Node_SupportExceptionWrongHouse;
+        }
+    ),
+    array(House::Stark, array(
+            'hid' => House::Stark,
+            'rids' => array(46)
+        ), null, function ($game, $e) {
+            return $e instanceof Game_Node_SupportExceptionWrongRegion;
+        }
+    ),
+    array(House::Baratheon, array(
+            'hid' => House::Stark,
+            'rids' => array(46)
+        ), null, function ($game, $e) {
+            return true;
+        }
+    ),
+    array(House::Stark, array(
+            'hid' => House::Stark,
+            'rids' => array(47)
+        ), function ($game) {
+            $node = $game->stack->end();
+            $regions = array_keys($node->regions);
+            $expected = array(1, 2, 3, 10, 6);
+            return $node instanceof Game_Node_Retreat
+                && $node->hid == House::Stark
+                && count(array_intersect($regions, $expected)) == count($expected);
+        }
     ),
 );
 

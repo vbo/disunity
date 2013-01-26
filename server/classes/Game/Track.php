@@ -36,6 +36,12 @@ class Game_Track extends Game_Entity
         }
     }
 
+    public function trackSort($trackId, array $hids) {
+        return array_filter($this->tracks[$trackId], function ($hid) use ($hids) {
+            return in_array($hid, $hids);
+        });
+    }
+
     public function stars($hid)
     {
         $pos = array_search($hid, $this->tracks[self::Raven]);

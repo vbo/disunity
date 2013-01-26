@@ -44,6 +44,7 @@ class Game_Order extends Game_Entity
         {
             $this->{$k} = $v;
         }
+        $this->type = floor($this->id / 10);
     }
 
     static function type($id)

@@ -22,6 +22,26 @@ class Game_Map extends Game_Entity
         $this->_checkConsistency();
     }
 
+    public function supports($region)
+    {
+        $supports = array();
+        foreach ($region->neighs as $neigh) {
+            $supRegion = $this->r($neigh);
+            if ($region->check(Game_Region::Water) && $supRegion->check(Game_Region::Land)) {
+                continue;
+            }
+            $order = $supRegion->order;
+            if ($order && $order->check(Game_Order::Support)) {
+                $hid = $order->hid;
+                if (!isset($supports[$hid])) {
+                    $supports[$hid] = array();
+                }
+                $supports[$hid][$supRegion->id] = $supRegion;
+            }
+        }
+        return $supports;
+    }
+
     public function setOrders($orders)
     {
         foreach ($orders as $rid => $order) {

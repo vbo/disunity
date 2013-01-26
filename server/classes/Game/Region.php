@@ -75,6 +75,13 @@ class Game_Region extends Game_Entity
         }
     }
 
+    public function defeated()
+    {
+        $this->power = null;
+        $this->army = null;
+        $this->owner = null;
+    }
+
     public function addUnits($hid, $units) {
         if (!$this->army) {
             $this->army = new Game_Army($hid, $units);
