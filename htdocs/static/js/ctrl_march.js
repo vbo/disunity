@@ -8,6 +8,7 @@
         this.hud = new map.MarchHud();
 
         this.march = null;
+        this.power = 0;
     };
 
     MarchCtrl.prototype.setup = function () {
@@ -26,7 +27,8 @@
             }
             ctrl.march = march;
             ctrl.routes.highlight(ctrl.routesToHighlight(march.routes));
-            ctrl.hud.handleShowUnits(march.sys.army);
+            ctrl.hud.handleShowUnits(march.sys.army, !march.sys.power && march.sys.type == 1 && map.current_player.resources['power']);
+            ctrl.power = 0;
 
             march.selected_units = [];
             ctrl.systems.eventMarchHere = function (sys) {
@@ -65,8 +67,7 @@
                 if (!homesys.sent_units.length) {
                     data['skip'] = true;
                 }
-                // todo: implement stay power at homesys
-                data['power'] = 0;
+                data['power'] = ctrl.power;
                 var marches = {};
                 each(homesys.sent_units, function (k, unit) {
                     if (!marches[unit.sys.id]) {
@@ -86,6 +87,16 @@
                 });
             };
         };
+
+        this.hud.eventPower = function () {
+            ctrl.power = 1;
+        };
+
+        this.hud.eventUnpower = function () {
+            ctrl.power = 0;
+        };
+
+        this.hud.init();
 
         this.systems.initMarches(this.available_routes);
     };

@@ -16,7 +16,10 @@
         world = _world;
         players = _players;
         current_player = _current_player;
-        $('.hud .brand').css("color", current_player.style.stroke).attr('title', 'You are ' + current_player.name);
+        console.log(current_player);
+        console.log($('.hud .brand'));
+        var title = 'You are ' + current_player.name;
+        $('.hud .brand').css("color", current_player.style.stroke).attr('title', title).attr('name', title);
         each(current_player['resources'], function (k, v) {
             $('.hud .resource.' + k).find('span').text(v);
         });

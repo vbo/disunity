@@ -59,6 +59,7 @@ body {
     padding-right: 10px;
 }
 .hud .phase_title {
+    z-index: -10;
     font-size: 22px;
     position: absolute;
     top: 0;
@@ -97,7 +98,7 @@ body {
 .hud.bottom .units li, .hud.bottom2 .fight .unit {
     text-align: center;
 }
-.hud.bottom .done, .hud.bottom2 .done {
+.hud.bottom .done, .hud.bottom2 .done, .hud.bottom .power {
     display: block;
     width: 70px;
     right: 10px;
@@ -111,8 +112,13 @@ body {
     font-size: 18px;
     text-align: center;
 }
-.hud.bottom .done.active, .hud.bottom2 .done.active {
+.hud.bottom .done.active, .hud.bottom .power.active, .hud.bottom2 .done.active {
     background: white;
+}
+
+.hud.bottom .power {
+    display: none;
+    right: 90px;
 }
 
 .hud.bottom2 {
@@ -195,6 +201,8 @@ body {
 .hud.bottom .orders li:hover,
 .hud.bottom .orders li.active,
 .hud.bottom .done.active:hover,
+.hud.bottom .power.active:hover,
+.hud.bottom .power.used,
 .hud.bottom2 .done.active:hover,
 .hud.bottom .units li:hover,
 .hud.bottom .units li.active

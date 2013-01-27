@@ -11,6 +11,7 @@
         this.enemy_house = conf.enemyHouse;
         this.order_click = null;
         this.click = null;
+        this.power = conf.power;
         this.sources = conf['crowns'] || 0;
         this.supplies = conf.supplies || 0;
         this.conf = conf;
@@ -116,6 +117,12 @@
             this.fort_orbs.forEach(function (o) {
                 o.redraw(x, y).attr({"stroke": me.stroke, "fill": me.fill});
             });
+        }
+        if (this._power_glyph) {
+            this._power_glyph.remove();
+        }
+        if (this.power) {
+            this._power_glyph = $path.order_glyph(x - 20, y + max_orb + 45, 'lightblub', this);
         }
         if (this._order) {
             this._order.remove();
