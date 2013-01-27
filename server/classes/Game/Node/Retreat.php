@@ -9,7 +9,7 @@ class Game_Node_Retreat extends Game_Node
     public $from;
     public $exclude;
 
-    public $regions;
+    public $routes;
 
     public function __construct($hid, $from, $exclude)
     {
@@ -18,9 +18,18 @@ class Game_Node_Retreat extends Game_Node
         $this->exclude = $exclude;
     }
 
+    public function data($hid)
+    {
+        return array(
+            'cur_player' => $this->hid,
+            'routes' => $this->routes,
+            'from' => $this->from->id
+        );
+    }
+
     public function _init()
     {
-        $this->regions = array();
+        $this->routes = array();
         $routes = array_filter($this->_game->map->availableMarchRoute($this->from->id, $this->hid));
         foreach ($routes as $rid => $route) {
             if ($rid == $this->exclude->id) {
@@ -30,9 +39,9 @@ class Game_Node_Retreat extends Game_Node
             if ($region->owner && $region->owner != $this->hid) {
                 continue;
             }
-            $this->regions[$rid] = $region;
+            $this->routes[$rid] = $route;
         }
-        if (!count($this->regions)) {
+        if (!count($this->routes)) {
             $from->defeated();
             return -1;
         }
@@ -50,7 +59,7 @@ class Game_Node_Retreat extends Game_Node
 
         $army = $this->from->army;
         $this->from->defeated();
-        $this->regions[$request->rid]->addUnits($this->hid, $army->units);
+        $this->_game->map->r($request->rid)->addUnits($this->hid, $army->units);
         return -1;
     }
 }

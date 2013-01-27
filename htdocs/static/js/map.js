@@ -71,6 +71,13 @@
             'power': PowerCtrl,
             'retreat': function (data) {
                 $('.hud .phase_title span').text("Action phase :: Marches :: Fight :: Retreat");
+                if (data['cur_player'] == map.current_player['house']) {
+                    console.log("you are current");
+                    return new map.RetreatCtrl(world.systems, world.routes, data);
+                } else {
+                    console.log(data['cur_player'] + ' is current');
+                }
+                return null;
             }
         };
         console.log(phase + " phase");

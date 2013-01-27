@@ -247,6 +247,7 @@
         this.eventMarchOrderSelected = null;
         this.eventMarchHere = null;
         this.eventSupport = null;
+        this.eventRetreat = null;
     };
 
     Systems.prototype = new SmartHash(System, 'update');
@@ -297,6 +298,29 @@
                 sys.update();
             };
         }, sids, true);
+    };
+
+    Systems.prototype.initRetreat = function (homesys, sids) {
+        var systems = this;
+        this.eachFromList(function (sys) {
+            sys.click = function () {
+                var home = systems[homesys];
+                if (!home.sent_units) {
+                    home.sent_units = reach(home.army, function (k, unit_type) {
+                        return {'type': unit_type, 'homesys': home};
+                    });
+                }
+                sys.units = home.sent_units;
+                sys.update();
+                home.update();
+                systems.eventRetreat(sys);
+            };
+        }, sids);
+    };
+
+    Systems.prototype.handleRetreatCancelled = function (sys) {
+        sys.units = null;
+        sys.update();
     };
 
     Systems.prototype.draw = function (paper, sys_drag_move, sys_drag_start) {

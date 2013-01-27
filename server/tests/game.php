@@ -330,11 +330,11 @@ $requests = array(
             'rids' => array(47)
         ), function ($game) {
             $node = $game->stack->end();
-            $regions = array_keys($node->regions);
+            $routes = array_keys($node->routes);
             $expected = array(1, 2, 3, 10, 6);
             return $node instanceof Game_Node_Retreat
                 && $node->hid == House::Stark
-                && count(array_intersect($regions, $expected)) == count($expected);
+                && count(array_intersect($routes, $expected)) == count($expected);
         }
     ),
 );

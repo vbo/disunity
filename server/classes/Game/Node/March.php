@@ -105,7 +105,7 @@ class Game_Node_March extends Game_Node
     {
         if ($node instanceof Game_Node_Fight) {
             if ($node->winner == $this->cur) {
-                $node->target->addUnits($node->units);
+                $node->target->addUnits($this->cur, $node->units);
             } else {
                 $node->source->addUnits($this->cur, $node->units);
             }
