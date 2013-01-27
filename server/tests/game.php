@@ -261,16 +261,28 @@ $requests = array(
         ))
     ),
     array(House::Baratheon, array(
-        'source' => 27,
-        'marches' => array(
-            59 => array(1),
-        ))
+            'source' => 27,
+            'marches' => array(
+                59 => array(1),
+            ),
+            'power' => 1
+        ),
     ),
     array(House::Lannister, array(
         'source' => 21,
         'marches' => array(
             22 => array(1)
         ))
+    ),
+    array(House::Baratheon, array(
+            'source' => 59,
+            'marches' => array(
+                4 => array(1, 2, 1),
+            ), 'power' => true
+        ), null, function ($game, $e) {
+            return $e instanceof Game_MapException
+                && $e->getCode() == Game_MapException::ALREADY_POWERED;
+        }
     ),
     array(House::Baratheon, array(
         'source' => 59,
