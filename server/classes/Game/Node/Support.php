@@ -30,33 +30,80 @@ class Game_Node_Support extends Game_Node
         return $this->_next();
     }
 
+    public function data($hid)
+    {
+        $current = $this->cur;
+        $hids = array(
+            $this->attacker => 1,
+            $this->defender => 1
+        );
+        if (array_key_exists($hid, $hids)) {
+            $hids = array($hid => 1);
+        }
+        $me = $this;
+        $supports = array_map(function ($region) use ($me, $hid) {
+            $orderComponent = array(
+                'type' => 'order',
+                'hid' => $hid,
+                'order' => $region->order,
+                'bonus' => $region->order->bonus
+            );
+
+            $defForce = array($orderComponent);
+            $defForce = array_merge($defForce, Game_Army::defenceComponents($hid, $region->army->units));
+
+            $attForce = array($orderComponent);
+            $attForce = array_merge($attForce, Game_Army::attackComponents($hid, $region->army->units, $me->region->fort));
+            return array(
+                $me->attacker => $attForce,
+                $me->defender => $defForce
+            );
+        }, $this->availSupports[$current]);
+
+        return array(
+            'cur_player' => $current,
+            'bonuses' => $this->bonuses,
+            'could_be_supported' => $hids,
+            'supports' => $supports
+        );
+    }
+
     public function act($hid, $request)
     {
         if ($this->cur != $hid) {
             throw new Exception("Hack! $hid != {$this->cur}");
         }
-        if (!in_array($request->hid, array($this->attacker, $this->defender))) {
-            throw new Game_Node_SupportExceptionWrongHouse("House {$request->hid} couldn't be supported");
-        }
-        if ($hid == $this->attacker || $hid == $this->defender) {
-            if ($request->hid != $hid) {
-                throw new Game_Node_SupportExceptionWrongHouse("House $hid can support only itself");
+        if (!isset($request->skip)) {
+            if (!in_array($request->hid, array($this->attacker, $this->defender))) {
+                throw new Game_Node_SupportExceptionWrongHouse("House {$request->hid} couldn't be supported");
             }
-        }
-        $availSupports = $this->availSupports[$hid];
-        foreach ($request->rids as $rid) {
-            if (!array_key_exists($rid, $availSupports)) {
-                throw new Game_Node_SupportExceptionWrongRegion("$rid is a wrong support region");
+            if ($hid == $this->attacker || $hid == $this->defender) {
+                if ($request->hid != $hid) {
+                    throw new Game_Node_SupportExceptionWrongHouse("House $hid can support only itself");
+                }
             }
-            $region = $availSupports[$rid];
-            $units = $region->army->units;
-            $armyBonus = 0;
-            if ($request->hid == $this->attacker) {
-                $armyBonus = Game_Army::attackForce($units);
-            } else {
-                $armyBonus = Game_Army::defenceForce($units);
+            $availSupports = $this->availSupports[$hid];
+            foreach ($request->rids as $rid) {
+                if (!array_key_exists($rid, $availSupports)) {
+                    throw new Game_Node_SupportExceptionWrongRegion("$rid is a wrong support region");
+                }
+                $region = $availSupports[$rid];
+                $units = $region->army->units;
+                if ($request->hid == $this->attacker) {
+                    $armyBonus = Game_Army::attackComponents($hid, $units, $this->target->fort);
+                } else {
+                    $armyBonus = Game_Army::defenceComponents($hid, $units);
+                }
+                $this->bonuses[$request->hid][] = array(
+                    'type' => 'order',
+                    'hid' => $hid,
+                    'order' => $region->order,
+                    'bonus' => $region->order->bonus
+                );
+                foreach ($armyBonus as $bonus) {
+                    $this->bonuses[$request->hid][] = $bonus;
+                }
             }
-            $this->bonuses[$request->hid]['support'] += $region->order->bonus + $armyBonus;
         }
         unset($this->availSupports[$hid]);
         return $this->_next();

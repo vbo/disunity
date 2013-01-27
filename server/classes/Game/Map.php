@@ -27,7 +27,10 @@ class Game_Map extends Game_Entity
         $supports = array();
         foreach ($region->neighs as $neigh) {
             $supRegion = $this->r($neigh);
-            if ($region->check(Game_Region::Water) && $supRegion->check(Game_Region::Land)) {
+            if (!$region->check(Game_Region::Land) && $supRegion->check(Game_Region::Land)) {
+                continue;
+            }
+            if (!$region->army) {
                 continue;
             }
             $order = $supRegion->order;

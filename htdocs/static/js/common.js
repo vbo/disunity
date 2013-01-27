@@ -201,4 +201,14 @@ if ( !Array.prototype.forEach ) {
         // 8. return undefined
     };
 }
+if(!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function(needle) {
+        for(var i = 0; i < this.length; i++) {
+            if(this[i] === needle) {
+                return i;
+            }
+        }
+        return -1;
+    };
+}
 

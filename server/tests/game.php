@@ -294,11 +294,7 @@ $requests = array(
             return $node instanceof Game_Node_Support
                 && $node->attacker = House::Baratheon
                 && $node->defender = House::Stark
-                && $node->region->id = 4
-                && $bonuses[House::Stark]['order'] == 1
-                && $bonuses[House::Stark]['force'] == 1
-                && $bonuses[House::Baratheon]['order'] == 1
-                && $bonuses[House::Baratheon]['force'] == 4;
+                && $node->region->id = 4;
         }
     ),
     array(House::Stark, array(

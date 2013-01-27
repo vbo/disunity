@@ -7,6 +7,8 @@
         this.fort = conf.fort;
         this.order = conf.order;
         this.units = null;
+        this.enemy = conf.enemy;
+        this.enemy_house = conf.enemyHouse;
         this.order_click = null;
         this.click = null;
         this.sources = conf['crowns'] || 0;
@@ -35,6 +37,7 @@
         this._title = undefined;
         this._army = [];
         this._units = [];
+        this._enemy = [];
         this._planets = [];
         this._order = undefined;
         this._order_anchor = undefined;
@@ -127,6 +130,12 @@
         }
         if (this.order) {
             this._order = $path.order(x, y, me);
+            if (this.order.could_be_selected) {
+                this._order.attr({'stroke': '#0033aa', 'fill': '#001122'});
+                if (this.order.selected) {
+                    this._order.attr({'fill': '#001144'});
+                }
+            }
 
             if (this.order != -1) {
                 if (this.order.icon) {
@@ -186,6 +195,22 @@
                     angle += 30;
                 });
             }
+            this._enemy.forEach(function (a) {
+                a.remove();
+            });
+            orb = max_orb + 16;
+            angle = 90 + 30;
+            if (this.enemy) {
+                this._enemy = [];
+                each(this.enemy, function (k, unit) {
+                    me._enemy.push(
+                        me.satellite(orb, angle, function (x, y) {
+                            return $path.enemy(x, y, unit, map.state.players[me.enemy_house].style);
+                        })
+                    );
+                    angle += 30;
+                });
+            }
         }
     };
 
@@ -221,6 +246,7 @@
 
         this.eventMarchOrderSelected = null;
         this.eventMarchHere = null;
+        this.eventSupport = null;
     };
 
     Systems.prototype = new SmartHash(System, 'update');
@@ -280,6 +306,19 @@
                 sys.anchor.drag(sys_drag_move, sys_drag_start);
             }
         }, true);
+    };
+
+    Systems.prototype.initSupports = function (supports) {
+        var systems = this;
+        systems.eachFromObj(function (sys, support) {
+            sys.order.selected = false;
+            sys.order.could_be_selected = true;
+            sys.order_click = function () {
+                sys.order.selected = !sys.order.selected;
+                systems.eventSupport(sys, support);
+                sys.update();
+            };
+        }, supports, true);
     };
 
 })(jQuery, map);

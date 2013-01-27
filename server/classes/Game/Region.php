@@ -29,11 +29,13 @@ class Game_Region extends Game_Entity
     public $power;
     public $army;
     public $order = null;
+    public $enemy = null;
+    public $enemyHouse = null;
 
     public $style;
 
     protected static $exportProps = array('id', 'name', 'type', 'fort', 'crowns', 'supplies', 'neighs',
-                                             'town', 'lord', 'owner', 'homeland', 'power', 'army', 'order', 'style');
+                                             'town', 'lord', 'owner', 'homeland', 'power', 'army', 'order', 'style', 'enemy', 'enemyHouse');
 
     public function __construct($id, $config, $army, $lord, $homeland)
     {
@@ -61,6 +63,16 @@ class Game_Region extends Game_Entity
 
     public function unsetOrder() {
         $this->order = null;
+    }
+
+    public function setEnemy($units, $hid) {
+        $this->enemyHouse = $hid;
+        $this->enemy = $units;
+    }
+
+    public function unsetEnemy() {
+        $this->enemyHomesys = null;
+        $this->enemy = null;
     }
 
     public function subUnits($units) {

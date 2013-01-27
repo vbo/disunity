@@ -9,6 +9,7 @@
     };
 
     hud.prototype.init = function (orders, preset_orders) {
+        $('.hud.bottom').show();
         var cnt = $('.hud.bottom .orders').html('');
         var hud = this;
         each(orders, function (k, order) {

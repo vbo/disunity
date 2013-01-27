@@ -59,22 +59,32 @@ class Game_Army extends Game_Entity
         return self::$forceTable[$unit];
     }
 
-    public static function attackForce($units, $fort)
+    public static function attackComponents($hid, $units, $fort)
     {
-        $force = 0;
+        $components = array();
         foreach ($units as $unit) {
-            $force += self::unitForce($unit, true, $fort);
+            $components[] = array(
+                'type' => 'unit',
+                'hid' => $hid,
+                'unit' => $unit,
+                'bonus' => self::unitForce($unit, true, $fort)
+            );
         }
-        return $force;
+        return $components;
     }
 
-    public static function defenceForce($units)
+    public static function defenceComponents($hid, $units)
     {
-        $force = 0;
+        $components = array();
         foreach ($units as $unit) {
-            $force += self::unitForce($unit);
+            $components[] = array(
+                'type' => 'unit',
+                'hid' => $hid,
+                'unit' => $unit,
+                'bonus' => self::unitForce($unit)
+            );
         }
-        return $force;
+        return $components;
     }
 }
 

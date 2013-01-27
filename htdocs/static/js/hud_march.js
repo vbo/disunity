@@ -10,6 +10,7 @@
 
     hud.prototype.handleShowUnits = function (units) {
         var hud = this;
+        $('.hud.bottom').show();
         var cnt = $('.hud.bottom .units').html('');
         units.forEach(function (u) {
             var $unit = $('<li><img class="unit" src="/static/img/unit/' + u + '.png" /></li>');

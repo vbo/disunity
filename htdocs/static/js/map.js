@@ -56,7 +56,22 @@
                 }
                 return null;
             },
-            'power': PowerCtrl
+            'support': function (data) {
+                $('.hud .phase_title span').text("Action phase :: Marches :: Fight :: Support");
+                if (data['cur_player'] == map.current_player['house']) {
+                    console.log("you are current");
+                    return new map.SupportCtrl(world.systems, data);
+                } else {
+                    console.log(data['cur_player'] + ' is current');
+                    var hud = new map.SupportHud();
+                    hud.init(data['bonuses'], []);
+                }
+                return null;
+            },
+            'power': PowerCtrl,
+            'retreat': function (data) {
+                $('.hud .phase_title span').text("Action phase :: Marches :: Fight :: Retreat");
+            }
         };
         console.log(phase + " phase");
         this.ctrl = router[phase](data);
