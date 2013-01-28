@@ -67,9 +67,12 @@ class Game_Node_Raid extends Game_Node
         $this->_game->map->unsetOrder($target);
     }
 
-    // todo: raid region with power order
     private function _raidPower($hid, $targetHid)
     {
+        $this->_game->players[$hid]->addPower();
+        if ($this->_game->players[$targetHid]->power()) {
+            $this->_game->players[$targetHid]->subPower();
+        }
     }
 }
 

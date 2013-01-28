@@ -1,8 +1,7 @@
 <?php
 
-class Game_PlayerException extends Exception {
-    const NO_POWER = 8;
-}
+class Game_PlayerException extends Exception {}
+class Game_PlayerExceptionNoPower extends Game_PlayerException {}
 
 class Game_Player extends Game_Entity
 {
@@ -34,6 +33,9 @@ class Game_Player extends Game_Entity
 
     public function subPower()
     {
+        if (!$this->resources['power']) {
+            throw new Game_PlayerExceptionNoPower('Lack of power');
+        }
         $this->resources['power']--;
     }
 
