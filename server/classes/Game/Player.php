@@ -39,9 +39,9 @@ class Game_Player extends Game_Entity
         $this->resources['power']--;
     }
 
-    public function addPower()
+    public function addPower($n=1)
     {
-        $this->resources['power']++;
+        $this->resources['power'] += $n;
     }
 }
 

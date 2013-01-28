@@ -19,6 +19,13 @@ class Game_Army extends Game_Entity
         self::Station => 0
     );
 
+    public static $costTable = array(
+        self::Troopers => 1,
+        self::Cruiser => 2,
+        self::Robot => 1,
+        self::Station => 2
+    );
+
     const STATION_FORT_ATTACK_BONUS = 4;
 
     public $hid;

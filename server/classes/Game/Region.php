@@ -4,6 +4,10 @@ class Game_RegionException extends Exception {
     const WRONG_ARMY_MOVE = 1;
     const HERE_IS_NO_ARMY = 2;
 }
+class Game_RegionExceptionConstructionUnit extends Game_RegionException {}
+class Game_RegionExceptionConstructWrongOwner extends Game_RegionException {}
+class Game_RegionExceptionUpgradeUnit extends Game_RegionException {}
+class Game_RegionExceptionUpgradeUnitTo extends Game_RegionException {}
 
 class Game_Region extends Game_Entity
 {
@@ -55,6 +59,37 @@ class Game_Region extends Game_Entity
         foreach ($config as $k => $v) {
             $this->{$k} = $v;
         }
+    }
+
+    public function construct($hid, $units)
+    {
+        if ($this->owner && $this->owner != $hid) {
+            throw new Game_RegionExceptionConstructWrongOwner("Wrong region owner: {$this->owner}");
+        }
+        $cost = 0;
+        foreach ($units as $unit) {
+            if ($this->type == self::Land && $unit == Game_Army::Robot || $this->type != self::Land && $unit != Game_Army::Robot) {
+                throw new Game_RegionExceptionConstructionUnit("Wrong construction unit `$unit` at region: {$this->id}");
+            }
+            $cost += Game_Army::$costTable[$unit];
+        }
+        $this->addUnits($hid, $units);
+        return $cost;
+    }
+
+    public function upgradeUnit($from, $to)
+    {
+        if ($from != Game_Army::Troopers) {
+            throw new Game_RegionExceptionUpgradeUnit("Couldn't upgrade this unit: `$from`");
+        }
+        if (!in_array($to, array(Game_Army::Station, Game_Army::Cruiser))) {
+            throw new Game_RegionExceptionUpgradeUnitTo("Couldn't upgrade to this unit: `$to`");
+        }
+        $hid = $this->owner;
+        $this->subUnits(array($from));
+        $this->addUnits($hid, array($to));
+        $cost = 1;
+        return $cost;
     }
 
     public function setOrder($order) {

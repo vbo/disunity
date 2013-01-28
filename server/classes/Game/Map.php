@@ -8,6 +8,9 @@ class Game_MapException extends Exception
     const WRONG_POWER_REGION = 4;
 }
 
+class Game_MapExceptionWrongConstructionRegion extends Exception {}
+class Game_MapExceptionConstructionLimit extends Exception {}
+
 class Game_Map extends Game_Entity
 {
     public $regions = array();
@@ -95,6 +98,34 @@ class Game_Map extends Game_Entity
             throw new Game_MapException("Try to power already powered region: `$rid`", Game_MapException::ALREADY_POWERED);
         }
         $this->r($rid)->power = 1;
+    }
+
+    public function construct($source, $construct, $upgrade) {
+        $abilities = array(
+            Game_Region::None => 0,
+            Game_Region::Castle => 1,
+            Game_Region::Stronghold => 2
+        );
+
+        $ability = $abilities[$source->fort];
+        foreach ($construct as $rid => $units) {
+            $region = $this->r($rid);
+            $neigh = in_array($rid, $source->neighs);
+            if ($rid != $source->id && !$neigh || $neigh && $region->check(Game_Region::Land)) {
+                throw new Game_MapExceptionWrongConstructionRegion("Region `$rid` and  `{$source->id}` are not neighbours");
+            }
+            $ability -= $region->construct($source->owner, $units);
+            if ($ability < 0) {
+                throw new Game_MapExceptionConstructionLimit("Couldn't construct: lack of ability");
+            }
+        }
+        foreach ($upgrade as $k => $units) {
+            list($from, $to) = $units;
+            $ability -= $source->upgradeUnit($from, $to);
+            if ($ability < 0) {
+                throw new Game_MapExceptionConstructionLimit("Couldn't upgrade: lack of ability");
+            }
+        }
     }
 
     public function army($rid)

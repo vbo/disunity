@@ -13,10 +13,13 @@ class Game_Node_Round extends Game_Node
 
     public function childFinished($node)
     {
+        if ($node instanceof Game_Node_Westeros) {
+            return new Game_Node_Planning();
+        }
         if ($node instanceof Game_Node_Planning) {
             return new Game_Node_Action();
         }
-        return null;
+        return -1;
     }
 }
 

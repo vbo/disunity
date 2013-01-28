@@ -337,6 +337,13 @@ $requests = array(
                 && count(array_intersect($routes, $expected)) == count($expected);
         }
     ),
+    array(House::Stark, array(
+            'rid' => 3
+        ), function ($game) {
+            $node = $game->stack->end();
+            return $node instanceof Game_Node_Westeros;
+        }
+    ),
 );
 
 foreach ($requests as $i => $request) {
