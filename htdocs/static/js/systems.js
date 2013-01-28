@@ -12,6 +12,8 @@
         this.order_click = null;
         this.click = null;
         this.power = conf.power;
+        this.lord = conf.lord;
+        this.homeland = conf.homeland;
         this.sources = conf['crowns'] || 0;
         this.supplies = conf.supplies || 0;
         this.conf = conf;
@@ -36,6 +38,7 @@
         this._orbs = [];
         this.fort_orbs = [];
         this._title = undefined;
+        this._garrison = undefined;
         this._army = [];
         this._units = [];
         this._enemy = [];
@@ -84,7 +87,7 @@
         };
         planets(this.sources, "yellow");
         planets(this.supplies, "green");
-        this._title = map.paper.text(x, y + max_orb + 11, this.title).attr({"fill": '#005571', 'font-weight': 'bold'});
+        this._title = map.paper.text(x, y + max_orb + 11, this.title).attr({"fill": '#005571', 'font-size': 12});
         this.anchor = $path.anchor(x, y, max_orb);
         this.anchor.system = this;
 
@@ -108,7 +111,26 @@
             me = this;
         this.bg.redraw(x, y);
         this.star.redraw(x, y).attr({"stroke": this.stroke, "fill": this.fill});
-        this._title.attr({"x": x, "y": y + max_orb + 11});
+        this._title.remove();
+        this._title = map.paper.text(x, y + max_orb + 11, this.title).attr({"fill": '#005571', 'font-size': 12});
+        if (this.power) {
+            this._title.attr({'fill': this.fill});
+        }
+        var force = this.homeland ? 2 : this.lord;
+        if (force) {
+            var color = this.lord ? '#005571' : this.fill;
+            this._title.attr({'x': x + 10});
+            this._garrison = map.paper.text(x - this._title.getBBox().width / 2, y + max_orb + 11, force).attr({'fill': color, 'font-size': 12});
+            this._garrison_frame = $path.frame(
+                    x - this._title.getBBox().width / 2,
+                    y + max_orb + 11,
+                    this._title.getBBox().width + 10,
+                    10,
+                    5,
+                    this._title.getBBox().height,
+                    color
+            );
+        }
         this.anchor.redraw(x, y);
         this._orbs.forEach(function (o) {
             o.redraw(x, y);
@@ -117,12 +139,6 @@
             this.fort_orbs.forEach(function (o) {
                 o.redraw(x, y).attr({"stroke": me.stroke, "fill": me.fill});
             });
-        }
-        if (this._power_glyph) {
-            this._power_glyph.remove();
-        }
-        if (this.power) {
-            this._power_glyph = $path.order_glyph(x - 20, y + max_orb + 45, 'lightblub', this);
         }
         if (this._order) {
             this._order.remove();

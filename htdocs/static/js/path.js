@@ -56,12 +56,12 @@
 
     $path.order_glyph = function (x, y, gl, me) {
         return $P.glyph(x + 19, y - 19, gl)
-            .attr({ "fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
+            .attr({"fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
     };
 
     $path.order_star = function (x, y, gl, me) {
         return $P.glyph(x + 10, y - 25, gl)
-            .attr({ "fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
+            .attr({"fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
     };
 
     $path.army = function(x, y, army_type, me, transparent) {
@@ -82,6 +82,13 @@
         return p;
     };
 
+    $path.garrison = function(x, y, me, num) {
+        var p = $P.garrison(x + 3, y);
+        p.attr({"stroke": me.fill, "stroke-width": 1, "fill": me.fill});
+        var n = map.paper.text(x - 7, y - 5, num).attr({"fill": me.fill, 'font-size': 11});
+        return p;
+    };
+
     $path.enemy = function(x, y, army_type, me) {
         var p = (function () {
             if (army_type == 1) {
@@ -93,6 +100,11 @@
             }
         })();
         return p.attr({"stroke": me.fill, "stroke-width": 1, "fill": me.fill})
+    };
+
+    $path.frame = function (x, y, width, cell_width, padding, h, color) {
+        return $P.frame(x - 1.5 * padding, y - 1.4 * padding, width - padding, cell_width + padding, h)
+            .attr({'stroke': color, 'stroke-width': 1});
     };
 
     // Useful path generators
@@ -116,11 +128,42 @@
             return p;
         };
         return {
+            frame: function (x, y, width, cell_width, h) {
+                return _(function (x, y) { return [
+                    ["M", x + cell_width, y],
+                    ["l", -cell_width, 0],
+                    ["l", 0, h],
+                    ["l", cell_width, 0],
+                    ["l", 0, -h],
+                    ["l", width, 0],
+                    ["l", 0, h],
+                    ["l", -width, 0],
+                ]}, x, y);
+            },
             glyph: function (x, y, type) {
                 var p = glyph[type];
                 return _(function (x, y) {
                     return Raphael.transformPath(p, 'T' + x + ' ' + y);
                 }, x, y);
+            },
+            garrison: function (x, y) {
+                var r = 5;
+                var yr = 1.5  * r;
+                var dx = 7;
+                var dy = 7;
+                var w = 1;
+                return _(function (x, y) { return Raphael.transformPath([
+                    ["M", x + r, y],
+                    ["a", r, yr, 0, 1, 0, -r * 2, 0],
+                    ["m", r, -yr / 4],
+                    ["l", dx, -dy],
+                    ["l", w, w],
+                    ["l", -dx, dy],
+                    ["m", -dx / 2, -yr / 2],
+                    ["l", dx, -dy],
+                    ["l", w, w],
+                    ["l", -dx, dy],
+                ], 'S0.8 0.8 ' + x + ' ' + y)}, x, y);
             },
             beacon: function (x, y, r, h) {
                 return _(function (x, y) { return [
