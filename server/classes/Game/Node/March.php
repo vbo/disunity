@@ -91,7 +91,7 @@ class Game_Node_March extends Game_Node
                 if ($fight) {
                     throw new Game_Node_MarchException("There could be only one fight", Game_Node_MarchException::TOO_MANY_FIGHTS);
                 }
-                $fight = new Game_Node_Fight($units, $sregion, $tregion);
+                $fight = new Game_Node_Fight($order->hid, $units, $sregion, $tregion);
                 continue;
             }
 

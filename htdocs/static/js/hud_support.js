@@ -21,7 +21,7 @@
                     '</span></li>';
             },
             'homeland': function (bonus) {
-                return '<li>' + bonus.bonus + '</li>';
+                return '<li class="homeland house_' + bonus.hid + '">' + number_format(bonus.bonus) + '</li>';
             }
         };
     };

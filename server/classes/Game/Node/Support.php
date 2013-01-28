@@ -90,7 +90,7 @@ class Game_Node_Support extends Game_Node
                 $region = $availSupports[$rid];
                 $units = $region->army->units;
                 if ($request->hid == $this->attacker) {
-                    $armyBonus = Game_Army::attackComponents($hid, $units, $this->target->fort);
+                    $armyBonus = Game_Army::attackComponents($hid, $units, $this->region->fort);
                 } else {
                     $armyBonus = Game_Army::defenceComponents($hid, $units);
                 }

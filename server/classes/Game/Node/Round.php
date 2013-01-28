@@ -19,6 +19,7 @@ class Game_Node_Round extends Game_Node
         if ($node instanceof Game_Node_Planning) {
             return new Game_Node_Action();
         }
+        $this->_game->map->cleanUp();
         return -1;
     }
 }

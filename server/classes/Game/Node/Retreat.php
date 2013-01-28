@@ -42,7 +42,7 @@ class Game_Node_Retreat extends Game_Node
             $this->routes[$rid] = $route;
         }
         if (!count($this->routes)) {
-            $from->defeated();
+            $this->from->defeated();
             return -1;
         }
     }

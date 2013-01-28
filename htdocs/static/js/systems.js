@@ -116,7 +116,7 @@
         if (this.power) {
             this._title.attr({'fill': this.fill});
         }
-        var force = this.homeland ? 2 : this.lord;
+        var force = this.homeland ? this.homeland : this.lord;
         if (force) {
             var color = this.lord ? '#005571' : this.fill;
             this._title.attr({'x': x + 10});

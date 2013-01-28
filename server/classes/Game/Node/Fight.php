@@ -15,12 +15,12 @@ class Game_Node_Fight extends Game_Node
     public $winner;
     public $looser;
 
-    public function __construct($units, $source, $target)
+    public function __construct($hid, $units, $source, $target)
     {
         $this->units = $units;
         $this->source = $source;
         $this->target = $target;
-        $this->attacker = $source->owner;
+        $this->attacker = $hid;
         $this->defender = $target->owner;
 
         $attOrder = $this->source->order;

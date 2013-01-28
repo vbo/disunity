@@ -47,7 +47,7 @@ class Game_Region extends Game_Entity
         if ($homeland) {
             $this->owner = $homeland;
             $this->power = 1;
-            $this->homeland = 1;
+            $this->homeland = 2;
         }
         if ($army) {
             $hid = $army['hid'];
@@ -126,6 +126,7 @@ class Game_Region extends Game_Entity
     {
         $this->power = null;
         $this->army = null;
+        $this->homeland = null;
         $this->owner = null;
     }
 
@@ -149,6 +150,11 @@ class Game_Region extends Game_Entity
     public function check($type)
     {
         return $this->type == $type;
+    }
+
+    public function cleanUp()
+    {
+        $this->unsetOrder();
     }
 }
 

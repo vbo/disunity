@@ -301,6 +301,13 @@ class Game_Map extends Game_Entity
         });
     }
 
+    public function cleanUp()
+    {
+        foreach ($this->regions as $region) {
+            $region->cleanUp();
+        }
+    }
+
     private function _assertWaterWayExists($hid, $from, $to)
     {
         $neighs = $from->neighs;

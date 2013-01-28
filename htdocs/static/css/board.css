@@ -159,6 +159,11 @@ body {
     text-align: center;
 }
 
+.hud.bottom2 .fight li.homeland {
+    text-align: center;
+    font-size: 27px;
+}
+
 .hud.bottom2 .fight li.result {
     margin-right: 15px;
     margin-left: 10px;
