@@ -249,9 +249,6 @@ body {
     z-index: 150;
     display: block;
 }
-.map_padder {
-    padding: 20000px;
-}
 
 .unit {
     height: 27px;
