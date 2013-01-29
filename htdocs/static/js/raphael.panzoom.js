@@ -96,12 +96,10 @@
 
         $(container).bind("mousewheel", handleScroll);
 
-        function handleScroll(e, delta, deltaX, deltaY) {
+        function handleScroll(e, delta) {
             if (!me.enabled) return false;
             var evt = window.event || e,
                 zoomCenter = getRelativePosition(evt, container);
-
-            delta = deltaY;
 
             applyZoom(delta, zoomCenter);
             if (evt.preventDefault) evt.preventDefault();
@@ -111,19 +109,23 @@
 
         function applyZoom(val, centerPoint) {
             if (!me.enabled) return;
-            me.currZoom += val;
-            if (me.currZoom < settings.minZoom) {
+            if ( me.currZoom == settings.minZoom && val < 0 || me.currZoom == settings.maxZoom && val > 0) {
+                return;
+            }
+            var probableZoom = me.currZoom + val;
+            if (probableZoom < settings.minZoom) {
+                val = settings.minZoom - me.currZoom;
                 me.currZoom = settings.minZoom;
-            } else if (me.currZoom > settings.maxZoom) {
+            } else if (probableZoom > settings.maxZoom) {
+                val = settings.maxZoom - me.currZoom;
                 me.currZoom = settings.maxZoom;
             } else {
-                centerPoint = centerPoint || { x: paper.width/2, y: paper.height/2 };
-
-                deltaX = (paper.width  * settings.zoomStep) * (centerPoint.x / paper.width) * val;
-                deltaY = (paper.height * settings.zoomStep) * (centerPoint.y / paper.height) * val;
-
-                repaint();
+                me.currZoom = probableZoom;
             }
+            centerPoint = centerPoint || { x: paper.width/2, y: paper.height/2 };
+            deltaX = (paper.width  * settings.zoomStep) * (centerPoint.x / paper.width) * val;
+            deltaY = (paper.height * settings.zoomStep) * (centerPoint.y / paper.height) * val;
+            repaint();
         }
 
         this.applyZoom = applyZoom;
@@ -192,3 +194,4 @@
     }
 
 })(jQuery);
+
