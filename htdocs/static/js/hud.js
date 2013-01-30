@@ -5,7 +5,7 @@
         cur_units: null,
         unit_systems: null,
         routes: null,
-        homesys: null,
+        homesys: null
     };
 
     var world;

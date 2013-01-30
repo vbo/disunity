@@ -143,6 +143,8 @@ SmartHash.prototype.setProperty = function (list, key, value) {
     }
 };
 
+window.console = window.console || {log: function () {}};
+
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.com/#x15.4.4.18
 if ( !Array.prototype.forEach ) {

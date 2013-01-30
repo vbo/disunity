@@ -4774,13 +4774,13 @@ window.Raphael.svg && function (R) {
             viewBox: vb,
             preserveAspectRatio: aspectRatio
         });
-        while (size && top) {
-            sw = "stroke-width" in top.attrs ? top.attrs["stroke-width"] : 1;
-            top.attr({"stroke-width": sw});
-            top._.dirty = 1;
-            top._.dirtyT = 1;
-            top = top.prev;
-        }
+        /*while (size && top) {*/
+        /*sw = "stroke-width" in top.attrs ? top.attrs["stroke-width"] : 1;*/
+        /*top.attr({"stroke-width": sw});*/
+        /*top._.dirty = 1;*/
+        /*top._.dirtyT = 1;*/
+        /*top = top.prev;*/
+        /*}*/
         this._viewBox = [x, y, w, h, !!fit];
         return this;
     };
