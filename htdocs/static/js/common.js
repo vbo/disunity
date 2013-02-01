@@ -84,14 +84,6 @@ var obj_keys = function (o) {
     return keys;
 };
 
-var location_hash = function (v) {
-    var ret = location.href.split("#")[1] || "";
-    if (v != undefined) {
-        location.hash = v;
-    }
-    return ret;
-};
-
 var SmartHash = function (type, postMethod) {
     this.type = type;
     this.postMethod = postMethod;
@@ -143,7 +135,7 @@ SmartHash.prototype.setProperty = function (list, key, value) {
     }
 };
 
-window.console = window.console || {log: function () {}};
+window.console = window.console || {log: function (a) {}};
 
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.com/#x15.4.4.18

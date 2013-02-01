@@ -4,15 +4,15 @@
     var $path = window.$path = {};
 
     $path.bg = function (x, y, max_orb) {
-        return $P.circle(x, y, max_orb + 8).attr({"fill": "black"});
+        return $P.circle(x, y, max_orb + 8).setAttrValues({"fill": "black"});
     };
 
     var fort_orb = function (x, y, r, me) {
-        return $P.circle(x, y, r).attr({"stroke": me.stroke, "stroke-width": 3, "fill": me.fill});
+        return $P.circle(x, y, r).setAttrValues({"stroke": me.stroke, "stroke-width": 3, "fill": me.fill});
     };
 
     $path.orb = function (x, y, r, me) {
-        return $P.circle(x, y, r).attr({"stroke": me.orb_stroke, "stroke-width": 1});
+        return $P.circle(x, y, r).setAttrValues({"stroke": me.orb_stroke, "stroke-width": 1});
     };
 
     $path.fort_orb_2 = function (x, y, me) {
@@ -33,12 +33,12 @@
         } else { // port
             a = $P.square(x, y, 8);
         }
-        a.attr({"stroke": me.stroke, "stroke-width": 3, "fill": me.fill});
+        a.setAttrValues({"stroke": me.stroke, "stroke-width": 3, "fill": me.fill});
         return a;
     };
 
     $path.satellite = function(x, y, color, me) {
-        var p = $P.circle(x, y, 4).attr({"fill": color});
+        var p = $P.circle(x, y, 4).setAttrValues({"fill": color});
         p.dx = x - me.x;
         p.dy = y - me.y;
         return p;
@@ -46,22 +46,22 @@
 
     $path.anchor = function(x, y, max_orb) {
         return $P.circle(x, y, max_orb + 5)
-            .attr({"fill": "white", "fill-opacity": 0, "stroke-opacity": 0});
+            .setAttrValues({"fill": "white", "fill-opacity": 0, "stroke-opacity": 0});
     };
 
     $path.order = function(x, y, me) {
         return $P.sector(x, y, 42)
-            .attr({"fill-opacity": 1, "stroke-opacity": 1, "stroke-width": 1,"fill": "black", "stroke": me.orb_stroke});
+            .setAttrValues({"fill-opacity": 1, "stroke-opacity": 1, "stroke-width": 1,"fill": "black", "stroke": me.orb_stroke});
     };
 
     $path.order_glyph = function (x, y, gl, me) {
         return $P.glyph(x + 19, y - 19, gl)
-            .attr({"fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
+            .setAttrValues({"fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
     };
 
     $path.order_star = function (x, y, gl, me) {
         return $P.glyph(x + 10, y - 25, gl)
-            .attr({"fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
+            .setAttrValues({"fill-opacity": 1, "stroke-width": 0, "fill": me.fill});
     };
 
     $path.army = function(x, y, army_type, me, transparent) {
@@ -75,17 +75,17 @@
                 return $P.robot(x, y);
             }
         })();
-        p.attr({"stroke": me.fill, "stroke-width": 1, "fill": me.fill});
+        p.setAttrValues({"stroke": me.fill, "stroke-width": 1, "fill": me.fill});
         if (transparent) {
-            p.attr({"stroke-opacity": 0.5, "fill-opacity": 0.5});
+            p.setAttrValues({"stroke-opacity": 0.5, "fill-opacity": 0.5});
         }
         return p;
     };
 
     $path.garrison = function(x, y, me, num) {
         var p = $P.garrison(x + 3, y);
-        p.attr({"stroke": me.fill, "stroke-width": 1, "fill": me.fill});
-        var n = map.paper.text(x - 7, y - 5, num).attr({"fill": me.fill, 'font-size': 11});
+        p.setAttrValues({"stroke": me.fill, "stroke-width": 1, "fill": me.fill});
+        var n = map.paper.text(x - 7, y - 5, num).setAttrValues({"fill": me.fill, 'font-size': 11});
         return p;
     };
 
@@ -99,12 +99,12 @@
                 return $P.robot(x, y);
             }
         })();
-        return p.attr({"stroke": me.fill, "stroke-width": 1, "fill": me.fill})
+        return p.setAttrValues({"stroke": me.fill, "stroke-width": 1, "fill": me.fill})
     };
 
     $path.frame = function (x, y, width, cell_width, padding, h, color) {
         return $P.frame(x - 1.5 * padding, y - 1.4 * padding, width - padding, cell_width + padding, h)
-            .attr({'stroke': color, 'stroke-width': 1});
+            .setAttrValues({'stroke': color, 'stroke-width': 1});
     };
 
     // Useful path generators
@@ -120,9 +120,9 @@
         };
         var _ = function (drawer, x, y) {
             var path = draw(drawer);
-            var p = map.paper.path(path(x, y));
+            var p = map.paper.insertElement("path", {d: path(x, y)});
             p.redraw = function (x, y) {
-                p.attr("path", path(x, y));
+                p.setAttribute("d", path(x, y));
                 return p;
             };
             return p;

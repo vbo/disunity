@@ -87,19 +87,20 @@
         };
         planets(this.sources, "yellow");
         planets(this.supplies, "green");
-        this._title = map.paper.text(x, y + max_orb + 11, this.title).attr({"fill": '#005571', 'font-size': 12});
+        this._title = map.paper.insertElement("text", {x: x, y: y + max_orb + 11, "fill": '#005571', 'font-size': 12});
+        this._title.textContent = this.title;
         this.anchor = $path.anchor(x, y, max_orb);
         this.anchor.system = this;
 
-        this.anchor.click(function (evt) {
+        this.anchor.onclick = function (evt) {
             if (me.click) {
                 me.click(evt);
             }
-        });
+        };
     };
 
     System.prototype.satellite = function (orb, angle, draw) {
-        var rad = map.paper.raphael.rad(angle);
+        var rad = Raphael.rad(angle);
         return draw(Math.round(this.x + orb * Math.cos(rad)), Math.round(this.y - orb * Math.sin(rad)));
     };
 
@@ -110,7 +111,7 @@
             y = this.conf.style.y = this.y,
             me = this;
         this.bg.redraw(x, y);
-        this.star.redraw(x, y).attr({"stroke": this.stroke, "fill": this.fill});
+        this.star.redraw(x, y).setAttrValues({"stroke": this.stroke, "fill": this.fill});
         this._title.remove();
         var text_el = document.createElementNS("http://www.w3.org/2000/svg", 'text');
         text_el.textContent = this.title;
@@ -121,24 +122,28 @@
         text_el.setAttribute('y', y + max_orb + 15.5 + 20);
         var svg = document.getElementsByTagName('svg')[0];
         svg.appendChild(text_el);
-        this._title = map.paper.text(x, y + max_orb + 11, this.title).attr({"fill": '#005571', 'font-size': 12});
-
+        this._title = map.paper.insertElement("text", {x: x, y: y + max_orb + 11}).setAttrValues({"fill": '#005571', 'font-size': 12});
+        this._title.textContent = this.title;
         if (this.power) {
-            this._title.attr({'fill': this.fill});
+            this._title.setAttrValues({'fill': this.fill});
         }
         var force = this.homeland ? this.homeland : this.lord;
         if (force) {
             var color = this.lord ? '#005571' : this.fill;
-            this._title.attr({'x': x + 10});
-            this._garrison = map.paper.text(x - this._title.getBBox().width / 2, y + max_orb + 11, force).attr({'fill': color, 'font-size': 12});
+            this._title.setAttrValues({'x': x + 10});
+            this._garrison = map.paper.insertElement("text", {
+                x: x - this._title.getBBox().width / 2,
+                y: y + max_orb + 11
+            }).setAttrValues({'fill': color, 'font-size': 12});
+            this._garrison.textContent = force;
             this._garrison_frame = $path.frame(
-                    x - this._title.getBBox().width / 2,
-                    y + max_orb + 11,
-                    this._title.getBBox().width + 10,
-                    10,
-                    5,
-                    this._title.getBBox().height,
-                    color
+                x - this._title.getBBox().width / 2,
+                y + max_orb + 11,
+                this._title.getBBox().width + 10,
+                10,
+                5,
+                this._title.getBBox().height,
+                color
             );
         }
 
@@ -148,7 +153,7 @@
         });
         if (this.fort_orbs) {
             this.fort_orbs.forEach(function (o) {
-                o.redraw(x, y).attr({"stroke": me.stroke, "fill": me.fill});
+                o.redraw(x, y).setAttrValues({"stroke": me.stroke, "fill": me.fill});
             });
         }
         if (this._order) {
@@ -165,9 +170,9 @@
         if (this.order) {
             this._order = $path.order(x, y, me);
             if (this.order.could_be_selected) {
-                this._order.attr({'stroke': '#0033aa', 'fill': '#001122'});
+                this._order.setAttrValues({'stroke': '#0033aa', 'fill': '#001122'});
                 if (this.order.selected) {
-                    this._order.attr({'fill': '#001144'});
+                    this._order.setAttrValues({'fill': '#001144'});
                 }
             }
 
@@ -178,16 +183,16 @@
                         this._order_star = $path.order_star(x, y, "star", me);
                     }
                     var str_bonus = number_format(this.order['bonus']);
-                    this._order_bonus = map.paper.text(x + 33, y - 8, str_bonus).attr("fill", this.fill);
+                    this._order_bonus = map.paper.text(x + 33, y - 8, str_bonus).setAttrValues("fill", this.fill);
                 }
             }
 
-            this._order_anchor = $path.order(x, y, me).attr({"stroke-opacity": 0, "fill-opacity": 0});
-            this._order_anchor.click(function (evt) {
+            this._order_anchor = $path.order(x, y, me).setAttrValues({"stroke-opacity": 0, "fill-opacity": 0});
+            this._order_anchor.onclick = function (evt) {
                 if (me.order_click) {
                     me.order_click(evt);
                 }
-            });
+            };
         }
         this._planets.forEach(function (p) {
             p.redraw(x + p.dx, y + p.dy);

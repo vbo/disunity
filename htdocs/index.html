@@ -46,10 +46,10 @@
             margin: 0 auto;
         "></div>
     </div>
-    <script src="/static/js/jquery-1.8.2.min.js"></script>
-    <script src="/static/js/jquery.overscroll.js"></script>
+    <script src="/static/js/jquery-1.8.2.dev.js"></script>
     <script src="/static/js/jquery.hotkeys.js"></script>
     <script src="/static/js/jquery.mousewheel.js"></script>
+    <script src="/static/js/svg.js"></script>
     <script src="/static/js/raphael.js"></script>
     <script src="/static/js/raphael.panzoom.js"></script>
 
@@ -70,68 +70,55 @@
     <script src="/static/js/systems.js"></script>
     <script src="/static/js/routes.js"></script>
     <script src="/static/js/hud.js"></script>
+
+    <script src="/static/js/demo_auth.js"></script>
     <script>
         (function ($) {
-            var auth = function () {
-                var player = location_hash();
-                if (!player) {
-                    player = window.prompt("Enter your login and password");
-                }
-                var api = new API("/api.php");
-                api.request("Auth", {"player": player}, function (rsp) {
+            var api = new API("/api.php");
+            demo_auth(api, function (house_id) {
+                api.request("GetEvent", {}, function (rsp) {
                     if (rsp['result'] != "success") {
-                        if (location_hash()) {
-                            location_hash("");
-                        } else {
-                            alert("Our server don't like the data you provided. Please try again");
-                        }
-                        return auth();
+                        alert("Something went wrong. Can't load event from API. Check debug console for details");
+                        console.log(rsp);
+                        return;
                     }
-                    location_hash(player);
                     var data = rsp['data'];
-                    var house_id = data['house_id'];
-                    api.request("GetEvent", {}, function (rsp) {
-                        if (rsp['result'] != "success") {
-                            alert("Something went wrong. Can't load event from API. Check debug console for details");
-                            console.log(rsp);
-                            return;
-                        }
-                        var data = rsp['data'];
-                        var event = data['event'];
-                        var state = data['state'];
+                    var event = data['event'];
+                    var state = data['state'];
 
-                        var players = state['players'];
-                        var current_player = players[house_id];
-                        var tracks = state['tracks']['tracks'];
+                    var players = state['players'];
+                    var current_player = players[house_id];
+                    var tracks = state['tracks']['tracks'];
 
+                    $(document).ready(function () {
+                        var svgns = "http://www.w3.org/2000/svg";
+                        var svgroot = document.getElementById('map_container').insertElementNS(svgns, "svg");
                         map.api = api;
                         map.state = state;
-                        map.paper = Raphael('map_container');
+                        map.paper = svgroot;
 
                         map.current_player = current_player;
                         var world = map.parse(players, state['map']['regions']);
-                        $(document).ready(function () {
-                            world.draw();
-                            hud.init(world, players, current_player);
-                            hud.setupTracks(tracks);
-                            world.setCtrl(event['phase'], event.data);
+                        world.draw();
+                        hud.init(world, players, current_player);
+                        hud.setupTracks(tracks);
+                        world.setCtrl(event['phase'], event.data);
 
-                            var on_resize = function () {
-                                var w = $(window).width(), h = $(window).height();
-                                $('.map_holder').width(w);
-                                $('.map_holder').height(h);
-                                map.paper.setSize(w, h);
-                            };
-                            $(window).resize(on_resize);
-                            on_resize();
+                        var on_resize = function () {
+                            var w = $(window).width(), h = $(window).height();
+                            $('.map_holder').width(w);
+                            $('.map_holder').height(h);
+                            svgroot.setAttribute("width", w);
+                            svgroot.setAttribute("height", h);
+                        };
+                        $(window).resize(on_resize);
+                        on_resize();
 
-                            var pz = new window.PanZoom(map.paper.canvas, {maxZoom: 7, minZoom: -10, initialZoom: 0});
-                            pz.init();
-                        });
-                    })
-                });
-            };
-            auth();
+                        var pz = new window.PanZoom(svgroot, {maxZoom: 7, minZoom: -10, initialZoom: 0});
+                        pz.init();
+                    });
+                })
+            });
         })(jQuery);
     </script>
 </body>

@@ -13,19 +13,17 @@
         if (this.s1.type == 2 || this.s2.type == 2) {
             stroke = "#aba";
         }
-        this.path = map.paper.path(
-            "M" + j(this.s1) + "L" + j(this.s2))
-            .attr({"stroke": stroke, "stroke-width": 1});
+        this.path = map.paper.insertElement("path", {d: "M" + j(this.s1) + "L" + j(this.s2), "stroke": stroke, "stroke-width": 1});
     };
     Route.prototype.update = function () {
-        this.path.attr("path", "M" + j(this.s1) + "L" + j(this.s2));
+        this.path.setAttrValues({d: "M" + j(this.s1) + "L" + j(this.s2)});
         var op = 0.8,
-            dashar = ". ";
+            dashar = "2 3";
         if (this.highlighted) {
             op = 1;
-            dashar = '--';
+            dashar = '4 2';
         }
-        this.path.attr({"stroke-opacity": op, "stroke-dasharray": dashar});
+        this.path.setAttrValues({"stroke-opacity": op, "stroke-dasharray": dashar});
 
     };
 

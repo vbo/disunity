@@ -14,7 +14,6 @@
         this.dragTime = 0;
         this.deltaX = 0;
         this.deltaY = 0;
-        this.mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel";
     };
 
     PanZoom.prototype.init = function () {
