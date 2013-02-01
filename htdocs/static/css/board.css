@@ -255,3 +255,8 @@ body {
     margin-top: 4px;
 }
 
+.svgtext {
+    fill: #005571;
+    font-family: Arial;
+}
+

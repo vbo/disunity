@@ -112,7 +112,17 @@
         this.bg.redraw(x, y);
         this.star.redraw(x, y).attr({"stroke": this.stroke, "fill": this.fill});
         this._title.remove();
+        var text_el = document.createElementNS("http://www.w3.org/2000/svg", 'text');
+        text_el.textContent = this.title;
+        text_el.setAttribute('font-size', 12);
+        text_el.setAttribute('text-anchor', 'middle');
+        text_el.setAttribute('class', 'svgtext');
+        text_el.setAttribute('x', x);
+        text_el.setAttribute('y', y + max_orb + 15.5 + 20);
+        var svg = document.getElementsByTagName('svg')[0];
+        svg.appendChild(text_el);
         this._title = map.paper.text(x, y + max_orb + 11, this.title).attr({"fill": '#005571', 'font-size': 12});
+
         if (this.power) {
             this._title.attr({'fill': this.fill});
         }
@@ -131,6 +141,7 @@
                     color
             );
         }
+
         this.anchor.redraw(x, y);
         this._orbs.forEach(function (o) {
             o.redraw(x, y);

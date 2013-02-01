@@ -125,7 +125,7 @@
                             $(window).resize(on_resize);
                             on_resize();
 
-                            var pz = map.paper.panzoom({maxZoom: 7, minZoom: -10, initialZoom: 0});
+                            var pz = new window.PanZoom(map.paper.canvas, {maxZoom: 7, minZoom: -10, initialZoom: 0});
                             pz.init();
                         });
                     })

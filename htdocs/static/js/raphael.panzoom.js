@@ -1,12 +1,9 @@
 (function ($) {
 
-    Raphael.fn.panzoom = function (options) {
-        return new PanZoom(this, options);
-    };
-
-    var PanZoom = function (paper, options) {
-        this.paper = paper;
-        this.container = paper.canvas.parentNode;
+    var PanZoom = window.PanZoom = function (svg, options) {
+        this.svg = svg;
+        this.svg.setAttribute('preserveAspectRatio', 'xMinYMin');
+        this.container = this.svg.parentNode;
         this.maxZoom = options.maxZoom || 9;
         this.minZoom = options.minZoom || 0;
         this.zoomStep = options.zoomStep || 0.1;
@@ -70,20 +67,20 @@
         } else {
             this.currZoom = probableZoom;
         }
-        centerPoint = centerPoint || { x: this.paper.width / 2, y: this.paper.height / 2 };
-        this.deltaX = (this.paper.width  * this.zoomStep) * (centerPoint.x / this.paper.width) * val;
-        this.deltaY = (this.paper.height * this.zoomStep) * (centerPoint.y / this.paper.height) * val;
+        centerPoint = centerPoint || { x: this.svg.getAttribute('width') / 2, y: this.svg.getAttribute('height') / 2 };
+        this.deltaX = (this.svg.getAttribute('width')  * this.zoomStep) * (centerPoint.x / this.svg.getAttribute('width')) * val;
+        this.deltaY = (this.svg.getAttribute('height') * this.zoomStep) * (centerPoint.y / this.svg.getAttribute('height')) * val;
         this.repaint();
     };
 
     PanZoom.prototype.dragging = function (e) {
         var evt = window.event || e;
-        var newWidth = this.paper.width * (1 - (this.currZoom * this.zoomStep));
-        var newHeight = this.paper.height * (1 - (this.currZoom * this.zoomStep));
+        var newWidth = this.svg.getAttribute('width') * (1 - (this.currZoom * this.zoomStep));
+        var newHeight = this.svg.getAttribute('height') * (1 - (this.currZoom * this.zoomStep));
         var newPoint = this.getRelativePosition(evt, this.container);
 
-        this.deltaX = (newWidth * (newPoint.x - this.initialPos.x) / this.paper.width) * -1;
-        this.deltaY = (newHeight * (newPoint.y - this.initialPos.y) / this.paper.height) * -1;
+        this.deltaX = (newWidth * (newPoint.x - this.initialPos.x) / this.svg.getAttribute('width')) * -1;
+        this.deltaY = (newHeight * (newPoint.y - this.initialPos.y) / this.svg.getAttribute('height')) * -1;
         this.initialPos = newPoint;
 
         this.repaint();
@@ -97,10 +94,19 @@
         this.currPos.x = this.currPos.x + this.deltaX;
         this.currPos.y = this.currPos.y + this.deltaY;
 
-        var newWidth = this.paper.width * (1 - (this.currZoom * this.zoomStep)),
-            newHeight = this.paper.height * (1 - (this.currZoom * this.zoomStep));
+        var w = this.svg.getAttribute('width') * (1 - (this.currZoom * this.zoomStep)),
+            h = this.svg.getAttribute('height') * (1 - (this.currZoom * this.zoomStep));
 
-        this.paper.setViewBox(this.currPos.x, this.currPos.y, newWidth, newHeight);
+        var x = this.currPos.x;
+        var y = this.currPos.y;
+        var S = " ";
+        var vb = x + S + y + S + w + S + h;
+
+        if (x == null) {
+            vb = "0 0 " + this.svg.getAttribute('width') + S + this.svg.getAttribute('height');
+        }
+
+        this.svg.setAttribute('viewBox', vb);
     };
 
     PanZoom.prototype.zoomIn = function (steps) {
