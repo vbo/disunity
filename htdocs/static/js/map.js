@@ -19,9 +19,7 @@
         this.players = players;
         this.systems = systems;
         this.routes = routes;
-
         this.ctrl = null;
-        this.routes_highlighted = [];
     };
     World.prototype.draw = function (paper) {
         var world = this;

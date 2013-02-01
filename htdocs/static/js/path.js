@@ -4,7 +4,7 @@
     var $path = window.$path = {};
 
     $path.bg = function (x, y, max_orb) {
-        return $P.circle(x, y, max_orb + 8).setAttrValues({"fill": "black"});
+        return $P.circle(x, y, max_orb + 8).setAttrValues({"fill": "black", "fill-opacity": 1});
     };
 
     var fort_orb = function (x, y, r, me) {
@@ -51,7 +51,7 @@
 
     $path.order = function(x, y, me) {
         return $P.sector(x, y, 42)
-            .setAttrValues({"fill-opacity": 1, "stroke-opacity": 1, "stroke-width": 1,"fill": "black", "stroke": me.orb_stroke});
+            .setAttrValues({"fill-opacity": 1, "stroke-opacity": 1, "stroke-width": 1, "fill": "black", "stroke": me.orb_stroke});
     };
 
     $path.order_glyph = function (x, y, gl, me) {
@@ -120,7 +120,7 @@
         };
         var _ = function (drawer, x, y) {
             var path = draw(drawer);
-            var p = map.paper.insertElement("path", {d: path(x, y)});
+            var p = map.paper.constructElement("path", {d: path(x, y)});
             p.redraw = function (x, y) {
                 p.setAttribute("d", path(x, y));
                 return p;

@@ -19,7 +19,7 @@
         this.conf = conf;
         this.neighs = conf.neighs;
         this.type = conf.type;
-        this.title = conf.name + "(" + id + ")";
+        this.title_text = conf.name + "(" + id + ")";
         this.x = conf.style.x;
         this.y = conf.style.y;
         var orbs_default = [22];
@@ -32,17 +32,17 @@
 
         this.army = [];
 
-        this.bg = undefined;
+        this.node = undefined;
         this.star = undefined;
+        this.forts = undefined;
+        this.planets = undefined;
+        this.title = undefined;
+        this.order_node = undefined;
+
         this.anchor = undefined;
-        this._orbs = [];
-        this.fort_orbs = [];
-        this._title = undefined;
-        this._garrison = undefined;
         this._army = [];
         this._units = [];
         this._enemy = [];
-        this._planets = [];
         this._order = undefined;
         this._order_anchor = undefined;
         this._order_glyph = undefined;
@@ -53,33 +53,44 @@
     };
 
     System.prototype.draw = function () {
+        // we are here when we need to initially draw
+        // the system on the canvas
+        var me = this;
         if (this.fort > 1) {
+            // we need to enlarge star orbs
             var fort = this.fort;
             this.orbs = this.orbs.map(function (v) { return v + fort * 3 });
         }
-        var max_orb = Math.max.apply(null, this.orbs),
-            x = this.x,
-            y = this.y;
-        this.bg = $path.bg(x, y, max_orb);
-        if (this.fort >= 2) {
-            this.fort_orbs.push($path.fort_orb_2(x, y, this));
-        }
-        var me = this;
-        this.star = $path.star(x, y, this);
-        if (this.fort == 3) {
-            this.fort_orbs.push($path.fort_orb_3(x, y, this));
-        }
-        var buf = this._orbs;
-        this.orbs.forEach(function (orb) {
-            var o = $path.orb(x, y, orb, me);
-            buf.push(o);
+        var max_orb = Math.max.apply(null, this.orbs);
+        // root system node
+        this.node = map.paper.insertElement("g", {
+            "class": "system", "id": this.id,
+            // todo: transformation lib
+            "transform": "translate(" + this.x + "," + this.y + ")"
         });
-        var orb = this.orbs[0];
+        // black circle bg (to add some padding for routes)
+        this.node.appendChild($path.bg(0, 0, max_orb));
+        // forts node holds visuals indicating most important - habitable systems
+        // todo: do it better ;)
+        if (this.fort > 1) {
+            this.forts = this.node.insertElement("g", {"class": "forts"});
+            this.forts.appendChild($path.fort_orb_2(0, 0, this));
+            if (this.fort > 2) {
+                this.forts.appendChild($path.fort_orb_3(0, 0, this));
+            }
+        }
+        // star and orbs
+        this.star = this.node.appendChild($path.star(0, 0, this).setAttrValues({"class": "star"}));
+        this.orbs.forEach(function (orb) {
+            var o = me.node.appendChild($path.orb(0, 0, orb, me));
+        });
+        // planets indicate systems with resources
+        this.planets = this.node.insertElement("g", {"class": "planets"});
+        var orb = this.orbs[0]; // min orb
         var angle = 90 + 30;
-        var container = this._planets;
         var planets = function (cnt, color) {
             for (var i = 0; i < cnt; i++) {
-                container.push(me.satellite(orb, angle, function (x, y) {
+                me.planets.appendChild(me.satellite(orb, angle, function (x, y) {
                     return $path.satellite(x, y, color, me);
                 }));
                 angle += 27;
@@ -87,11 +98,13 @@
         };
         planets(this.sources, "yellow");
         planets(this.supplies, "green");
-        this._title = map.paper.insertElement("text", {x: x, y: y + max_orb + 11, "fill": '#005571', 'font-size': 12});
-        this._title.textContent = this.title;
-        this.anchor = $path.anchor(x, y, max_orb);
+        // system title (it's really useful when you try to perform some negotiations with other players)
+        this.title = this.node.insertElement("g", {"class": "title", "font-size": 12});
+        this.title.text = this.title.insertElement("text", {x: 0, y: max_orb + 11 + 5});
+        this.title.text.textContent = this.title_text;
+        // anchor is a transparent overlay for click handling
+        this.anchor = $path.anchor(0, 0, max_orb);
         this.anchor.system = this;
-
         this.anchor.onclick = function (evt) {
             if (me.click) {
                 me.click(evt);
@@ -101,102 +114,82 @@
 
     System.prototype.satellite = function (orb, angle, draw) {
         var rad = Raphael.rad(angle);
-        return draw(Math.round(this.x + orb * Math.cos(rad)), Math.round(this.y - orb * Math.sin(rad)));
+        return draw(Math.round(orb * Math.cos(rad)), -Math.round(orb * Math.sin(rad)));
     };
 
     System.prototype.update = function () {
         // additionally updates config
-        var max_orb = Math.max.apply(null, this.orbs),
-            x = this.conf.style.x = this.x,
-            y = this.conf.style.y = this.y,
-            me = this;
-        this.bg.redraw(x, y);
-        this.star.redraw(x, y).setAttrValues({"stroke": this.stroke, "fill": this.fill});
-        this._title.remove();
-        var text_el = document.createElementNS("http://www.w3.org/2000/svg", 'text');
-        text_el.textContent = this.title;
-        text_el.setAttribute('font-size', 12);
-        text_el.setAttribute('text-anchor', 'middle');
-        text_el.setAttribute('class', 'svgtext');
-        text_el.setAttribute('x', x);
-        text_el.setAttribute('y', y + max_orb + 15.5 + 20);
-        var svg = document.getElementsByTagName('svg')[0];
-        svg.appendChild(text_el);
-        this._title = map.paper.insertElement("text", {x: x, y: y + max_orb + 11}).setAttrValues({"fill": '#005571', 'font-size': 12});
-        this._title.textContent = this.title;
-        if (this.power) {
-            this._title.setAttrValues({'fill': this.fill});
+        var me = this, max_orb = Math.max.apply(null, this.orbs);
+        if (map.editable) {
+            // currently only x/y props are editable
+            this.conf.style.x = this.x;
+            this.conf.style.y = this.y;
         }
-        var force = this.homeland ? this.homeland : this.lord;
+        this.star.setAttrValues({"stroke": this.stroke, "fill": this.fill});
+        this.title.text.setAttrValues({"fill": '#005571', "x": 0});
+        if (this.title.force) {
+            this.title.frame.remove();
+            this.title.force.remove();
+        }
+        if (this.power) {
+            this.title.text.setAttribute("fill", this.fill);
+        }
+        var force = this.homeland || this.lord;
         if (force) {
             var color = this.lord ? '#005571' : this.fill;
-            this._title.setAttrValues({'x': x + 10});
-            this._garrison = map.paper.insertElement("text", {
-                x: x - this._title.getBBox().width / 2,
-                y: y + max_orb + 11
+            this.title.text.setAttribute('x', 10);
+            var force_text = this.title.force = this.title.insertElement("text", {
+                x: -this.title.getBBox().width / 2,
+                y: max_orb + 11 + 5
             }).setAttrValues({'fill': color, 'font-size': 12});
-            this._garrison.textContent = force;
-            this._garrison_frame = $path.frame(
-                x - this._title.getBBox().width / 2,
-                y + max_orb + 11,
-                this._title.getBBox().width + 10,
+            force_text.textContent = force;
+            this.title.frame = this.title.appendChild($path.frame(
+                -this.title.text.getBBox().width / 2,
+                max_orb + 11,
+                this.title.text.getBBox().width + 10,
                 10,
                 5,
-                this._title.getBBox().height,
+                this.title.text.getBBox().height,
                 color
-            );
+            ));
         }
-
-        this.anchor.redraw(x, y);
-        this._orbs.forEach(function (o) {
-            o.redraw(x, y);
-        });
-        if (this.fort_orbs) {
-            this.fort_orbs.forEach(function (o) {
-                o.redraw(x, y).setAttrValues({"stroke": me.stroke, "fill": me.fill});
-            });
+        if (this.fort > 1) {
+            // todo: do the coloring using owner class
+            this.forts.setAttrValues({"stroke": me.stroke, "fill": me.fill});
         }
-        if (this._order) {
-            this._order.remove();
-            this._order_anchor.remove();
-            if (this._order_glyph) {
-                this._order_glyph.remove();
-                this._order_bonus.remove();
-            }
-            if (this._order_star) {
-                this._order_star.remove();
-            }
+        if (this.order_node) {
+            this.order_node.remove();
+            delete this.order_node;
         }
         if (this.order) {
-            this._order = $path.order(x, y, me);
+            this.order_node = this.node.insertElement("g", {"class": "order_holder"});
+            this.order_node.bg = this.order_node.appendChild($path.order(0, 0, me)).setAttrValues({"class": "bg"});
             if (this.order.could_be_selected) {
-                this._order.setAttrValues({'stroke': '#0033aa', 'fill': '#001122'});
+                this.order_node.bg.setAttrValues({'stroke': '#0033aa', 'fill': '#001122'});
                 if (this.order.selected) {
-                    this._order.setAttrValues({'fill': '#001144'});
+                    this.order_node.bg.setAttrValues({'fill': '#001144'});
                 }
             }
-
             if (this.order != -1) {
                 if (this.order.icon) {
-                    this._order_glyph = $path.order_glyph(x, y, this.order.icon, me);
+                    this.order_node.glyph = this.order_node.appendChild($path.order_glyph(0, 0, this.order.icon, me));
                     if (this.order.star) {
-                        this._order_star = $path.order_star(x, y, "star", me);
+                        this.order_node.star = this.order_node.appendChild($path.order_star(0, 0, "star", me));
                     }
                     var str_bonus = number_format(this.order['bonus']);
-                    this._order_bonus = map.paper.text(x + 33, y - 8, str_bonus).setAttrValues("fill", this.fill);
+                    this.order_node.bonus = this.order_node.insertElement("text", {x: 33, y: -4, "fill": this.fill, "font-size": 9});
+                    this.order_node.bonus.textContent = str_bonus;
                 }
             }
-
-            this._order_anchor = $path.order(x, y, me).setAttrValues({"stroke-opacity": 0, "fill-opacity": 0});
-            this._order_anchor.onclick = function (evt) {
+            this.order_node.anchor = this.order_node.appendChild($path.order(0, 0, me).setAttrValues({
+                "stroke-opacity": 0, "fill-opacity": 0
+            }));
+            this.order_node.anchor.onclick = function (evt) {
                 if (me.order_click) {
                     me.order_click(evt);
                 }
             };
         }
-        this._planets.forEach(function (p) {
-            p.redraw(x + p.dx, y + p.dy);
-        });
         if (!map.editable) {
             // Remove army from map editor (too complicated)
             this._army.forEach(function (a) {

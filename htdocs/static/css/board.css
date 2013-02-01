@@ -255,8 +255,17 @@ body {
     margin-top: 4px;
 }
 
-.svgtext {
-    fill: #005571;
-    font-family: Arial;
-}
 
+.map .system {
+    fill-opacity: 0;
+}
+.map .planets, .map text, .map .star, .map .forts, .map .order .bg {
+    fill-opacity: 1;
+}
+.map text {
+    font-family: Arial, sans-serif;
+    text-anchor: middle;
+}
+.map .title {
+    fill: #005571;
+}

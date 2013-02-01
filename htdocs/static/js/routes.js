@@ -18,7 +18,7 @@
     Route.prototype.update = function () {
         this.path.setAttrValues({d: "M" + j(this.s1) + "L" + j(this.s2)});
         var op = 0.8,
-            dashar = "2 3";
+            dashar = "1 3";
         if (this.highlighted) {
             op = 1;
             dashar = '4 2';

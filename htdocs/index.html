@@ -92,7 +92,7 @@
 
                     $(document).ready(function () {
                         var svgns = "http://www.w3.org/2000/svg";
-                        var svgroot = document.getElementById('map_container').insertElementNS(svgns, "svg");
+                        var svgroot = document.getElementById('map_container').insertElementNS(svgns, "svg", {"class": "map"});
                         map.api = api;
                         map.state = state;
                         map.paper = svgroot;
