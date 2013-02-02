@@ -3,51 +3,58 @@
 
     var System = function (id, conf) {
         this.id = id;
+        // holds a link to conf to update it in map.editable mode
+        this.conf = conf;
+        // holds a link to the current system owner
         this.owner = conf['owner'];
-        this.fort = conf.fort;
-        this.order = conf.order;
+        // common system properties
+        this.type = conf['type'];
+        this.fort = conf['fort'];
+        this.sources = conf['crowns'] || 0;
+        this.supplies = conf['supplies'] || 0;
+        this.homeland = conf['homeland'];
+        this.title_text = conf['name'] + " [" + id + "]";
+        this.neighs = conf['neighs'];
+        // current order if any
+        // we suppose that backend only tell us the orders
+        // known by the current player
+        this.order = conf['order'];
         this.units = null;
-        this.enemy = conf.enemy;
-        this.enemy_house = conf.enemyHouse;
+        this.enemy = conf['enemy'];
+        this.enemy_house = conf['enemyHouse'];
+        this.power = conf['power'];
+        this.lord = conf['lord'];
+        // event handlers
         this.order_click = null;
         this.click = null;
-        this.power = conf.power;
-        this.lord = conf.lord;
-        this.homeland = conf.homeland;
-        this.sources = conf['crowns'] || 0;
-        this.supplies = conf.supplies || 0;
-        this.conf = conf;
-        this.neighs = conf.neighs;
-        this.type = conf.type;
-        this.title_text = conf.name + "(" + id + ")";
-        this.x = conf.style.x;
-        this.y = conf.style.y;
+        // visual style
+        var style = conf['style'];
+        this.x = style['x'];
+        this.y = style['y'];
         var orbs_default = [22];
         if (this.sources > 0 || this.supplies > 0) {
+            // energy sources and supplies hold the first orb
+            // so we need another one to deploy units or something
             orbs_default.push(32);
         }
-        this.orbs = conf.style.orbs || orbs_default;
-        this.fill = conf.style.fill || '#000';
-        this.stroke = conf.style.stroke || '#111';
+        this.orbs = style['orbs'] || orbs_default;
+        this.fill = style['fill'] || '#000';
+        this.stroke = style['stroke'] || '#111';
 
         this.army = [];
+        // define links to some DOM nodes
+        // actual nodes will be created on draw()
+        this.node = null;
+        this.star = null;
+        this.forts = null;
+        this.planets = null;
+        this.title = null;
+        this.order_node = null;
+        this.anchor = null;
 
-        this.node = undefined;
-        this.star = undefined;
-        this.forts = undefined;
-        this.planets = undefined;
-        this.title = undefined;
-        this.order_node = undefined;
-
-        this.anchor = undefined;
         this._army = [];
         this._units = [];
         this._enemy = [];
-        this._order = undefined;
-        this._order_anchor = undefined;
-        this._order_glyph = undefined;
-        this._order_star = undefined;
-        this._order_bonus = undefined;
 
         this.orb_stroke = '#005571';
     };
@@ -103,7 +110,7 @@
         this.title.text = this.title.insertElement("text", {x: 0, y: max_orb + 11 + 5});
         this.title.text.textContent = this.title_text;
         // anchor is a transparent overlay for click handling
-        this.anchor = $path.anchor(0, 0, max_orb);
+        this.anchor = this.node.appendChild($path.anchor(0, 0, max_orb));
         this.anchor.system = this;
         this.anchor.onclick = function (evt) {
             if (me.click) {
@@ -118,14 +125,14 @@
     };
 
     System.prototype.update = function () {
-        // additionally updates config
         var me = this, max_orb = Math.max.apply(null, this.orbs);
         if (map.editable) {
             // currently only x/y props are editable
             this.conf.style.x = this.x;
             this.conf.style.y = this.y;
         }
-        this.star.setAttrValues({"stroke": this.stroke, "fill": this.fill});
+        // we perform title reconstruction and recoloring
+        // on every update for simplicity
         this.title.text.setAttrValues({"fill": '#005571', "x": 0});
         if (this.title.force) {
             this.title.frame.remove();
@@ -153,45 +160,51 @@
                 color
             ));
         }
+        // update star coloring
+        // todo: do the coloring using owner class
+        this.star.setAttrValues({"stroke": this.stroke, "fill": this.fill});
         if (this.fort > 1) {
-            // todo: do the coloring using owner class
             this.forts.setAttrValues({"stroke": me.stroke, "fill": me.fill});
         }
-        if (this.order_node) {
-            this.order_node.remove();
-            delete this.order_node;
-        }
-        if (this.order) {
-            this.order_node = this.node.insertElement("g", {"class": "order_holder"});
-            this.order_node.bg = this.order_node.appendChild($path.order(0, 0, me)).setAttrValues({"class": "bg"});
-            if (this.order.could_be_selected) {
-                this.order_node.bg.setAttrValues({'stroke': '#0033aa', 'fill': '#001122'});
-                if (this.order.selected) {
-                    this.order_node.bg.setAttrValues({'fill': '#001144'});
-                }
+        // next code recreates some DOM elements on every update
+        // in map.editable mode updates performs very often so we can't use this code
+        // because of performance degradation
+        // todo: do it better ;)
+        if (!map.editable) {
+            // order node and its content visuals
+            if (this.order_node) {
+                this.order_node.remove();
+                delete this.order_node;
             }
-            if (this.order != -1) {
-                if (this.order.icon) {
-                    this.order_node.glyph = this.order_node.appendChild($path.order_glyph(0, 0, this.order.icon, me));
+            if (this.order) {
+                this.order_node = this.node.insertElement("g", {"class": "order_holder"});
+                var bg = this.order_node.appendChild($path.order(0, 0, me)).setAttrValues({"class": "bg"});
+                if (this.order.could_be_selected) {
+                    bg.setAttrValues({'stroke': '#0033aa', 'fill': '#001122'});
+                    if (this.order.selected) {
+                        bg.setAttrValues({'fill': '#001144'});
+                    }
+                }
+                // fixme: why order can be -1 and can be an object?
+                if (this.order != -1 && this.order.icon) {
+                    // we are here if the order contents need to be visible by the current player
+                    // e.g. user just select some order for this system
+                    // or it is an action phase where all orders already set
+                    this.order_node.appendChild($path.order_glyph(0, 0, this.order.icon, me));
                     if (this.order.star) {
-                        this.order_node.star = this.order_node.appendChild($path.order_star(0, 0, "star", me));
+                        this.order_node.appendChild($path.order_star(0, 0, "star", me));
                     }
                     var str_bonus = number_format(this.order['bonus']);
-                    this.order_node.bonus = this.order_node.insertElement("text", {x: 33, y: -4, "fill": this.fill, "font-size": 9});
-                    this.order_node.bonus.textContent = str_bonus;
+                    var bonus = this.order_node.insertElement("text", {x: 33, y: -4, "fill": this.fill, "font-size": 9});
+                    bonus.textContent = str_bonus;
                 }
+                var order_anchor = this.order_node.appendChild($path.order(0, 0, me).setAttrValues({"stroke-opacity": 0, "fill-opacity": 0}));
+                order_anchor.onclick = function (evt) {
+                    if (me.order_click) {
+                        me.order_click(evt);
+                    }
+                };
             }
-            this.order_node.anchor = this.order_node.appendChild($path.order(0, 0, me).setAttrValues({
-                "stroke-opacity": 0, "fill-opacity": 0
-            }));
-            this.order_node.anchor.onclick = function (evt) {
-                if (me.order_click) {
-                    me.order_click(evt);
-                }
-            };
-        }
-        if (!map.editable) {
-            // Remove army from map editor (too complicated)
             this._army.forEach(function (a) {
                 a.remove();
             });
@@ -376,6 +389,4 @@
             };
         }, supports, true);
     };
-
 })(jQuery, map);
-
