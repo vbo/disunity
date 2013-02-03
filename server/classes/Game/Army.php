@@ -68,27 +68,24 @@ class Game_Army extends Game_Entity
 
     public static function attackComponents($hid, $units, $fort)
     {
-        $components = array();
-        foreach ($units as $unit) {
-            $components[] = array(
-                'type' => 'unit',
-                'hid' => $hid,
-                'unit' => $unit,
-                'bonus' => self::unitForce($unit, true, $fort)
-            );
-        }
-        return $components;
+        return self::_components($hid, $units, true, $fort);
     }
 
     public static function defenceComponents($hid, $units)
     {
+        return self::_components($hid, $units, false, Game_Region::None);
+    }
+
+    private static function _components($hid, $units, $isAttack, $fort)
+    {
+        // todo: cover this stuff in unit tests
         $components = array();
         foreach ($units as $unit) {
             $components[] = array(
                 'type' => 'unit',
                 'hid' => $hid,
                 'unit' => $unit,
-                'bonus' => self::unitForce($unit)
+                'bonus' => self::unitForce($unit, $isAttack, $fort)
             );
         }
         return $components;
