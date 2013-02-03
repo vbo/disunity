@@ -7,20 +7,20 @@ class Game_ArmyException extends Exception
 
 class Game_Army extends Game_Entity
 {
-    const Troopers = 1;
+    const Fighter = 1;
     const Cruiser = 2;
     const Robot = 3;
     const Station = 4;
 
     public static $forceTable = array(
-        self::Troopers => 1,
+        self::Fighter => 1,
         self::Cruiser => 2,
         self::Robot => 1,
         self::Station => 0
     );
 
     public static $costTable = array(
-        self::Troopers => 1,
+        self::Fighter => 1,
         self::Cruiser => 2,
         self::Robot => 1,
         self::Station => 2
@@ -33,7 +33,7 @@ class Game_Army extends Game_Entity
 
     protected static $exportProps = array('hid', 'units');
 
-    public function __construct($hid, $units)
+    public function __construct($hid, array $units)
     {
         $this->hid = $hid;
         $this->units = $units;

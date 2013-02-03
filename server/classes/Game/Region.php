@@ -79,7 +79,7 @@ class Game_Region extends Game_Entity
 
     public function upgradeUnit($from, $to)
     {
-        if ($from != Game_Army::Troopers) {
+        if ($from != Game_Army::Fighter) {
             throw new Game_RegionExceptionUpgradeUnit("Couldn't upgrade this unit: `$from`");
         }
         if (!in_array($to, array(Game_Army::Station, Game_Army::Cruiser))) {
