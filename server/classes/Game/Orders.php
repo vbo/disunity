@@ -1,12 +1,10 @@
 <?php
 
-class Game_OrdersException extends Exception
-{
-    const ORDERS_COUNT = 1;
-    const NO_ARMY = 2;
-    const NO_ORDER = 3;
-    const LACK_OF_STARS = 4;
-}
+class Game_OrdersException extends Exception {}
+class Game_OrdersException_BadCount extends Game_OrdersException {}
+class Game_OrdersException_NoArmy extends Game_OrdersException {}
+class Game_OrdersException_NoOrder extends Game_OrdersException {}
+class Game_OrdersException_LackOfStars extends Game_OrdersException {}
 
 class Game_Orders
 {
@@ -28,7 +26,7 @@ class Game_Orders
     public function processOrders($hid, $orders, $stars, $armies)
     {
         if (count($orders) != count($armies)) {
-            throw new Game_OrdersException("Order error: orders count is not valid!", Game_OrdersException::ORDERS_COUNT);
+            throw new Game_OrdersException_BadCount("Order error: orders count is not valid!");
         }
 
         $allOrders = $this->available();
@@ -36,7 +34,7 @@ class Game_Orders
 
         foreach($orders as $region => $order) {
             if (!isset($armies[$region])) {
-                throw new Game_OrdersException( "Order error: has no army at region `$region`", Game_OrdersException::NO_ARMY);
+                throw new Game_OrdersException_NoArmy( "Order error: has no army at region `$region`");
             }
 
             $ords = array_filter($allOrders, function ($v) use ($order) {
@@ -44,7 +42,7 @@ class Game_Orders
             });
 
             if (!$ords) {
-                throw new Game_OrdersException("Order error: there is no such order: `$order`", Game_OrdersException::NO_ORDER);
+                throw new Game_OrdersException_NoOrder("Order error: there is no such order: `$order`");
             }
 
             $ordsKeys = array_keys($ords);
@@ -54,7 +52,7 @@ class Game_Orders
 
             if ($ord['star']) {
                 if (!$stars) {
-                    throw new Game_OrdersException("Order error: Lack of stars", Game_OrdersException::LACK_OF_STARS);
+                    throw new Game_OrdersException_LackOfStars("Order error: Lack of stars");
                 }
                 $stars--;
             }

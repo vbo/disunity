@@ -50,49 +50,6 @@ $requests = array(
 
     array(House::Baratheon, array(
         'orders' => array(
-            56 => Game_Order::RaidStar,
-            27 => Game_Order::MarchBasic,
-        )), null, function($game, $e) {
-            return $e instanceof Game_OrdersException
-                && $e->getCode() == Game_OrdersException::ORDERS_COUNT;
-        }
-    ),
-
-    array(House::Baratheon, array(
-        'orders' => array(
-            56 => Game_Order::SupportBasic,
-            59 => Game_Order::SupportBasic,
-            27 => Game_Order::SupportBasic,
-        )), null, function($game, $e) {
-            return $e instanceof Game_OrdersException
-                && $e->getCode() == Game_OrdersException::NO_ORDER;
-        }
-    ),
-
-    array(House::Baratheon, array(
-        'orders' => array(
-            56 => Game_Order::RaidStar,
-            59 => Game_Order::DefenseStar,
-            27 => Game_Order::MarchBasic,
-        )), null, function($game, $e) {
-            return $e instanceof Game_OrdersException
-                && $e->getCode() == Game_OrdersException::LACK_OF_STARS;
-        }
-    ),
-
-    array(House::Baratheon, array(
-        'orders' => array(
-            57 => Game_Order::RaidStar,
-            59 => Game_Order::DefenseBasic,
-            27 => Game_Order::MarchBasic,
-        )), null, function($game, $e) {
-            return $e instanceof Game_OrdersException
-                && $e->getCode() == Game_OrdersException::NO_ARMY;
-        }
-    ),
-
-    array(House::Baratheon, array(
-        'orders' => array(
             56 => Game_Order::MarchBasic,
             59 => Game_Order::MarchStar,
             27 => Game_Order::MarchWeak,

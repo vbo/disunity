@@ -57,6 +57,11 @@ class Game_Order extends Game_Entity
         return $this->type == $orderType;
     }
 
+    public function is($orderTypeId)
+    {
+        return $this->id == $orderTypeId;
+    }
+
     static function checkRaid($from, $to)
     {
         $rules = array(
