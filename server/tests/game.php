@@ -173,7 +173,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 56,
         'marches' => array(
-            23 => array(3)
+            23 => array("robot")
         )), null, function($game, $e) {
             return $e instanceof Game_MapException
                 && $e->getCode() == Game_MapException::WRONG_TARGET_REGION;
@@ -183,7 +183,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 56,
         'marches' => array(
-            46 => array(3)
+            46 => array("robot")
         )), null, function($game, $e) {
             return $e instanceof Game_MapException
                 && $e->getCode() == Game_MapException::NO_WAY;
@@ -193,7 +193,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 57,
         'marches' => array(
-            46 => array(3)
+            46 => array("robot")
         )), null, function($game, $e) {
             return $e instanceof Game_Node_MarchException
                 && $e->getCode() == Game_Node_MarchException::NOT_MARCH;
@@ -203,7 +203,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 56,
         'marches' => array(
-            49 => array(3, 3, 3)
+            49 => array("robot", "robot", "robot")
         )), null, function($game, $e) {
             return $e instanceof Game_ArmyException
                 && $e->getCode() == Game_ArmyException::LACK_OF_UNITS;
@@ -213,7 +213,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 56,
         'marches' => array(
-            49 => array(1)
+            49 => array("fighter")
         )), null, function($game, $e) {
             return $e instanceof Game_ArmyException
                 && $e->getCode() == Game_ArmyException::LACK_OF_UNITS;
@@ -223,7 +223,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 59,
         'marches' => array(
-            26 => array(1)
+            26 => array("fighter")
         )), null, function($game, $e) {
             return $e instanceof Game_MapException
                 && $e->getCode() == Game_MapException::NO_WAY;
@@ -233,7 +233,7 @@ $requests = array(
     array(House::Baratheon, array(
             'source' => 56,
             'marches' => array(
-                49 => array(1)
+                49 => array("fighter")
             ),
             'power' => true
         ), null, function($game, $e) {
@@ -244,26 +244,26 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 56,
         'marches' => array(
-            49 => array(3),
+            49 => array("robot"),
         ),
     )),
     array(House::Lannister, array(
         'source' => 19,
         'marches' => array(
-            18 => array(2)
+            18 => array("cruiser")
         ))
     ),
     array(House::Stark, array(
         'source' => 3,
         'marches' => array(
-            10 => array(2),
-            2 => array(1)
+            10 => array("cruiser"),
+            2 => array("fighter")
         ))
     ),
     array(House::Baratheon, array(
             'source' => 27,
             'marches' => array(
-                59 => array(1),
+                59 => array("fighter"),
             ),
             'power' => 1
         ),
@@ -271,13 +271,13 @@ $requests = array(
     array(House::Lannister, array(
         'source' => 21,
         'marches' => array(
-            22 => array(1)
+            22 => array("fighter")
         ))
     ),
     array(House::Baratheon, array(
             'source' => 59,
             'marches' => array(
-                4 => array(1, 2, 1),
+                4 => array("fighter", "cruiser", "fighter"),
             ), 'power' => true
         ), null, function ($game, $e) {
             return $e instanceof Game_MapException
@@ -287,7 +287,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 59,
         'marches' => array(
-            4 => array(1, 2, 1),
+            4 => array("fighter", "cruiser", "fighter"),
         )), function ($game) {
             $node = $game->stack->end();
             $bonuses = $node->bonuses;

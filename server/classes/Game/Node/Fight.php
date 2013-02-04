@@ -17,6 +17,7 @@ class Game_Node_Fight extends Game_Node
 
     public function __construct($hid, $units, $source, $target)
     {
+        assert('$units instanceof Game_Army');
         $this->units = $units;
         $this->source = $source;
         $this->target = $target;
@@ -44,7 +45,7 @@ class Game_Node_Fight extends Game_Node
                 'bonus' => $defOrder->bonus
             );
         }
-        $defBonuses = array_merge($defBonuses, Game_Army::defenceComponents($this->defender, $this->target->army->units));
+        $defBonuses = array_merge($defBonuses, Game_Army::defenceComponents($this->defender, $this->target->army));
         if ($target->homeland) {
             $defBonuses[] = array(
                 'type' => 'homeland',

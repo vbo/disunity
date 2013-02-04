@@ -88,11 +88,10 @@ class Game_Node_Support extends Game_Node
                     throw new Game_Node_SupportExceptionWrongRegion("$rid is a wrong support region");
                 }
                 $region = $availSupports[$rid];
-                $units = $region->army->units;
                 if ($request->hid == $this->attacker) {
-                    $armyBonus = Game_Army::attackComponents($hid, $units, $this->region->fort);
+                    $armyBonus = Game_Army::attackComponents($hid, $region->army, $this->region->fort);
                 } else {
-                    $armyBonus = Game_Army::defenceComponents($hid, $units);
+                    $armyBonus = Game_Army::defenceComponents($hid, $region->army);
                 }
                 $this->bonuses[$request->hid][] = array(
                     'type' => 'order',

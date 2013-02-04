@@ -7,63 +7,53 @@ class Game_ArmyException extends Exception
 
 class Game_Army extends Game_Entity
 {
-    const Fighter = 1;
-    const Cruiser = 2;
-    const Robot = 3;
-    const Station = 4;
-
-    public static $forceTable = array(
-        self::Fighter => 1,
-        self::Cruiser => 2,
-        self::Robot => 1,
-        self::Station => 0
-    );
-
-    public static $costTable = array(
-        self::Fighter => 1,
-        self::Cruiser => 2,
-        self::Robot => 1,
-        self::Station => 2
-    );
-
-    const STATION_FORT_ATTACK_BONUS = 4;
-
     public $hid;
-    public $units;
+    public $units = array();
 
     protected static $exportProps = array('hid', 'units');
 
-    public function __construct($hid, array $units)
+    public function __construct($hid, array $unitTypes=array())
     {
         $this->hid = $hid;
-        $this->units = $units;
+        foreach ($unitTypes as $type) {
+            $unit = Game_Unit::factory($type);
+            $this->units[] = $unit;
+        }
     }
 
-    public function sub($units)
+    public function sub($unitTypes)
     {
-        foreach ($units as $unit) {
-            $place = array_search($unit, $this->units);
-            if ($place === false) {
+        $army = new self($this->hid);
+        foreach ($unitTypes as $type) {
+            $found = false;
+            for($i = 0, $len = count($this->units); $i < $len; $i++) {
+                if ($this->units[$i]->is($type)) {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
                 throw new Game_ArmyException("Lack of units", Game_ArmyException::LACK_OF_UNITS);
             }
-            array_splice($this->units, $place, 1);
+            $spliced = array_splice($this->units, $i, 1);
+            $army->units[] = $spliced[0];
         }
-        return $this->units;
+        return $army;
     }
 
-    public function add($units)
+    public function add($army)
     {
-        foreach ($units as $unit) {
-            array_push($this->units, $unit);
+        foreach ($army->units as $unit) {
+            $this->units[] = $unit;
         }
     }
 
     public static function unitForce($unit, $isAttack=false, $fort=Game_Region::None)
     {
-        if ($isAttack && $unit == self::Station && $fort != Game_Region::None) {
-            return self::STATION_FORT_ATTACK_BONUS;
+        if ($isAttack && $fort != Game_Region::None) {
+            return $unit->fortAttack;
         }
-        return self::$forceTable[$unit];
+        return $unit->attack;
     }
 
     public static function attackComponents($hid, $units, $fort)
@@ -80,7 +70,7 @@ class Game_Army extends Game_Entity
     {
         // todo: cover this stuff in unit tests
         $components = array();
-        foreach ($units as $unit) {
+        foreach ($units->units as $unit) {
             $components[] = array(
                 'type' => 'unit',
                 'hid' => $hid,

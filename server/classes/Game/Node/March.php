@@ -78,26 +78,23 @@ class Game_Node_March extends Game_Node
     private function _march($order, $source, $marches)
     {
         $fight = null;
-        $sregion = $this->_game->map->r($source);
-
+        $from = $this->_game->map->r($source);
         foreach ($marches as $rid => $units) {
+            $to = $this->_game->map->r($rid);
             if (!$units) {
                 throw new Game_Node_MarchException("No force", Game_Node_MarchException::NO_FORCE);
             }
-            $sregion->subUnits($units);
+            $marchedArmy = $from->subUnits($units);
             $this->_game->map->assertMarchPossible($order->hid, $source, $rid);
-            $tregion = $this->_game->map->r($rid);
-            if ($tregion->army && $tregion->owner != $order->hid) {
+            if ($to->army && $to->owner != $order->hid) {
                 if ($fight) {
                     throw new Game_Node_MarchException("There could be only one fight", Game_Node_MarchException::TOO_MANY_FIGHTS);
                 }
-                $fight = new Game_Node_Fight($order->hid, $units, $sregion, $tregion);
+                $fight = new Game_Node_Fight($order->hid, $marchedArmy, $from, $to);
                 continue;
             }
-
-            $tregion->addUnits($order->hid, $units);
+            $to->addUnits($marchedArmy);
         }
-
         return $fight;
     }
 
@@ -105,9 +102,9 @@ class Game_Node_March extends Game_Node
     {
         if ($node instanceof Game_Node_Fight) {
             if ($node->winner == $this->cur) {
-                $node->target->addUnits($this->cur, $node->units);
+                $node->target->addUnits($node->units);
             } else {
-                $node->source->addUnits($this->cur, $node->units);
+                $node->source->addUnits($node->units);
             }
         }
         return $this->_next();

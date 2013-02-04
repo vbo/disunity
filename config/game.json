@@ -8,9 +8,9 @@
                 "stroke": "#7C7C00"
             },
             "army": {
-                "56": [3, 3],
-                "59": [1, 2],
-                "27": [1]
+                "56": ["robot", "robot"],
+                "59": ["fighter", "cruiser"],
+                "27": ["fighter"]
             },
             "resources": {
                 "supplies": 2,
@@ -83,9 +83,9 @@
                 "stroke": "#cc0909"
             },
             "army": {
-                "19": [1, 2],
-                "51": [3],
-                "21": [1]
+                "19": ["fighter", "cruiser"],
+                "51": ["robot"],
+                "21": ["fighter"]
             },
             "resources": {
                 "supplies": 2,
@@ -158,9 +158,9 @@
                 "stroke": "#5a5a5a"
             },
             "army": {
-                "3":  [1, 2],
-                "4":  [1],
-                "47": [3]
+                "3":  ["fighter", "cruiser"],
+                "4":  ["fighter"],
+                "47": ["robot"]
             },
             "resources": {
                 "supplies": 1,
@@ -233,9 +233,9 @@
                 "stroke": "#2eac36"
             },
             "army": {
-                "29": [1, 2],
-                "32": [1],
-                "52": [3]
+                "29": ["fighter", "cruiser"],
+                "32": ["fighter"],
+                "52": ["robot"]
             },
             "resources": {
                 "supplies": 2,
@@ -308,10 +308,10 @@
                 "stroke": "#3933a6"
             },
             "army": {
-                "14": [1, 2],
-                "15": [3],
-                "50": [3],
-                "9":  [1]
+                "14": ["fighter", "cruiser"],
+                "15": ["robot"],
+                "50": ["robot"],
+                "9":  ["fighter"]
             },
             "track":{
                 "throne":5,
@@ -384,9 +384,9 @@
                 "stroke": "#ff7400"
             },
             "army": {
-                "42": [1, 2],
-                "41": [1],
-                "55": [3]
+                "42": ["fighter", "cruiser"],
+                "41": ["fighter"],
+                "55": ["robot"]
             },
             "resources": {
                 "supplies": 2,

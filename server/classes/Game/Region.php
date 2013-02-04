@@ -26,20 +26,22 @@ class Game_Region extends Game_Entity
     public $crowns;
     public $supplies;
     public $neighs = array();
-    public $town = null;
+    public $town;
     public $lord;
     public $owner;
     public $homeland;
     public $power;
     public $army;
-    public $order = null;
-    public $enemy = null;
-    public $enemyHouse = null;
+    public $order;
+    public $enemy;
+    public $enemyHouse;
+    public $enemyHomesys;
 
     public $style;
 
-    protected static $exportProps = array('id', 'name', 'type', 'fort', 'crowns', 'supplies', 'neighs',
-                                             'town', 'lord', 'owner', 'homeland', 'power', 'army', 'order', 'style', 'enemy', 'enemyHouse');
+    protected static $exportProps = array(
+        'id', 'name', 'type', 'fort', 'crowns', 'supplies', 'neighs',
+        'town', 'lord', 'owner', 'homeland', 'power', 'army', 'order', 'style', 'enemy', 'enemyHouse');
 
     public function __construct($id, $config, $army, $lord, $homeland)
     {
@@ -67,27 +69,31 @@ class Game_Region extends Game_Entity
             throw new Game_RegionExceptionConstructWrongOwner("Wrong region owner: {$this->owner}");
         }
         $cost = 0;
+        $army = new Game_Army($hid);
         foreach ($units as $unit) {
-            if ($this->type == self::Land && $unit == Game_Army::Robot || $this->type != self::Land && $unit != Game_Army::Robot) {
+            if ($this->type == self::Land && $unit == Game_Unit::Robot || $this->type != self::Land && $unit != Game_Unit::Robot) {
                 throw new Game_RegionExceptionConstructionUnit("Wrong construction unit `$unit` at region: {$this->id}");
             }
-            $cost += Game_Army::$costTable[$unit];
+            $instance = Game_Unit::factory($unit);
+            $cost += $instance->cost;
+            $army->units[] = $instance;
         }
-        $this->addUnits($hid, $units);
+        $this->addUnits($army);
         return $cost;
     }
 
     public function upgradeUnit($from, $to)
     {
-        if ($from != Game_Army::Fighter) {
+        if ($from != Game_Unit::Fighter) {
             throw new Game_RegionExceptionUpgradeUnit("Couldn't upgrade this unit: `$from`");
         }
-        if (!in_array($to, array(Game_Army::Station, Game_Army::Cruiser))) {
+        if (!in_array($to, array(Game_Unit::Station, Game_Unit::Cruiser))) {
             throw new Game_RegionExceptionUpgradeUnitTo("Couldn't upgrade to this unit: `$to`");
         }
         $hid = $this->owner;
         $this->subUnits(array($from));
-        $this->addUnits($hid, array($to));
+        $army = new Game_Army($hid, array($to));
+        $this->addUnits($army);
         $cost = 1;
         return $cost;
     }
@@ -114,12 +120,14 @@ class Game_Region extends Game_Entity
         if (!$this->army) {
             throw new Game_RegionException("There is no army here: {$this->id}", Game_RegionException::HERE_IS_NO_ARMY);
         }
-        if (!$this->army->sub($units)) {
+        $subed = $this->army->sub($units);
+        if (!$this->army->units) {
             $this->army = null;
             if (!$this->power && !$this->army) {
                 $this->owner = null;
             }
         }
+        return $subed;
     }
 
     public function defeated()
@@ -130,15 +138,15 @@ class Game_Region extends Game_Entity
         $this->owner = null;
     }
 
-    public function addUnits($hid, $units) {
+    public function addUnits(Game_Army $army) {
         if (!$this->army) {
-            $this->army = new Game_Army($hid, $units);
-            $this->owner = $hid;
+            $this->army = $army;
+            $this->owner = $army->hid;
         } else {
-            if ($this->army->hid != $hid) {
+            if ($this->army->hid != $army->hid) {
                 throw new Game_RegionException("Wrong army move", Game_RegionException::WRONG_ARMY_MOVE);
             }
-            $this->army->add($units);
+            $this->army->add($army);
         }
     }
 

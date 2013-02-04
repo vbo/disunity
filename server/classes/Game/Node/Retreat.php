@@ -59,7 +59,7 @@ class Game_Node_Retreat extends Game_Node
 
         $army = $this->from->army;
         $this->from->defeated();
-        $this->_game->map->r($request->rid)->addUnits($this->hid, $army->units);
+        $this->_game->map->r($request->rid)->addUnits($army);
         return -1;
     }
 }

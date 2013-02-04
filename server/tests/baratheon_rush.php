@@ -75,44 +75,44 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 56,
         'marches' => array(
-            49 => array(3),
+            49 => array("robot"),
         ),
     )),
     array(House::Lannister, array(
         'source' => 19,
         'marches' => array(
-            18 => array(1, 2)
+            18 => array("fighter", "cruiser")
         ))
     ),
     array(House::Stark, array(
         'source' => 3,
         'marches' => array(
-            4 => array(1)
+            4 => array("fighter")
         ))
     ),
     array(House::Baratheon, array(
             'source' => 27,
             'marches' => array(
-                59 => array(1),
+                59 => array("fighter"),
             )
         ),
     ),
     array(House::Lannister, array(
         'source' => 21,
         'marches' => array(
-            22 => array(1)
+            22 => array("fighter")
         ))
     ),
     array(House::Baratheon, array(
         'source' => 59,
         'marches' => array(
-            10 => array(1, 2, 1),
+            10 => array("fighter", "cruiser", "fighter"),
         )),
     ),
     array(House::Lannister, array(
         'source' => 51,
         'marches' => array(
-            50 => array(3)
+            50 => array("robot")
         ))
     ),
     // ----------------------------------------------------------- PLANNING
@@ -149,14 +149,14 @@ $requests = array(
     array(House::Lannister, array(
         'source' => 18,
         'marches' => array(
-            11 => array(1, 2)
+            11 => array("fighter", "cruiser")
         ),
         'power' => 1
     )),
     array(House::Baratheon, array(
         'source' => 10,
         'marches' => array(
-            '3' => array(1, 2, 1)
+            '3' => array("fighter", "cruiser", "fighter")
         )
     )),
     // support
@@ -170,7 +170,7 @@ $requests = array(
     array(House::Lannister, array(
         'source' => 22,
         'marches' => array(
-            23 => array(1)
+            23 => array("fighter")
         ),
         'power' => 1
     )),
@@ -204,7 +204,7 @@ $requests = array(
     array(House::Lannister, array(
         'source' => 11,
         'marches' => array(
-            10 => array(2, 1)
+            10 => array("cruiser", "fighter")
         )
     )),
     // ----------------------------------------------------------- PLANNING
@@ -236,7 +236,7 @@ $requests = array(
     array(House::Baratheon, array(
         'source' => 3,
         'marches' => array(
-            4 => array(2, 1, 1)
+            4 => array("cruiser", "fighter", "fighter")
         )
     )),
     array(House::Baratheon, array(
