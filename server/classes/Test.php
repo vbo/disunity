@@ -1,9 +1,6 @@
 <?php
 abstract class Test
 {
-    /**
-     * @var Game_Storage
-     */
     private $_storage;
     private $_errorBuffer = array();
     protected $_game;
@@ -18,11 +15,11 @@ abstract class Test
         $methods = $ref->getMethods();
         foreach ($methods as $method) {
             $storage->clear();
-            $world = new Game($storage, $this->_playersNum(), $conf);
-            $world = $this->_prepare($world);
-            $world->commit();
+            $game = $this->_game = new Game($storage, $this->_playersNum(), $conf);
+            $game->commit();
             $matched = preg_match("/_test[A-Z].*/", $method->name);
             if ($matched) {
+                $this->_prepare();
                 try {
                     $this->{$method->name}();
                     echo '.';
@@ -44,9 +41,9 @@ abstract class Test
         }
     }
 
-    protected function _prepare($world)
+    protected function _prepare()
     {
-        return $world;
+        // pass
     }
 
     protected function _playersNum()
@@ -74,6 +71,7 @@ abstract class Test
                 throw new AssertException("Unexpected exception: {$e}");
             }
         }
+        $game->commit();
     }
 
     protected function _assertOrder($rid, $typeId=null)
@@ -81,6 +79,20 @@ abstract class Test
         $order = $this->_game->map->r($rid)->order;
         if (!$order || ($typeId && !$order->is($typeId))) {
             throw new AssertException("Order expected: <$typeId>, given <{$order->id}>");
+        }
+    }
+
+    protected function _assertEquals($a, $b, $failed)
+    {
+        if ($a != $b) {
+            throw new AssertException($failed . " [{$a} != {$b}]");
+        }
+    }
+
+    protected function _assertTrue($bool, $failed)
+    {
+        if (!$bool) {
+            throw new AssertException($failed);
         }
     }
 }
