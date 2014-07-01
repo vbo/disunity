@@ -42,8 +42,8 @@
         }
         var cnt = $('.hud.bottom .units').html('');
         units.forEach(function (u) {
-            var $unit = $('<li><img class="unit" src="/static/img/unit/' + u + '.png" /></li>');
-            var unit = {type: u, node: $unit};
+            var $unit = $('<li><img class="unit" src="/static/img/unit/' + u.type + '.png" /></li>');
+            var unit = {type: u.type, node: $unit};
             cnt.append($unit);
             $unit.click(function () {
                 var $t = $(this);

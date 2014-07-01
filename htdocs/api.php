@@ -50,7 +50,6 @@ class Api
 
     public function doGetEvent($input)
     {
-        $input;
         $house = @$_SESSION['house'];
         if (!$house) {
             return false;

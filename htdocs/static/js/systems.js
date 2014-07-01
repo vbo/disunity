@@ -52,9 +52,9 @@
         this.order_node = null;
         this.anchor = null;
 
-        this._army = [];
-        this._units = [];
-        this._enemy = [];
+        this._army = null;
+        this._units = null;
+        this._enemy = null;
 
         this.orb_stroke = '#005571';
     };
@@ -91,6 +91,9 @@
         this.orbs.forEach(function (orb) {
             var o = me.node.appendChild($path.orb(0, 0, orb, me));
         });
+        this._army = this.node.insertElement("g", {"class": "army"});
+        this._units = this.node.insertElement("g", {"class": "units"});
+        this._enemy = this.node.insertElement("g", {"class": "enemy"});
         // planets indicate systems with resources
         this.planets = this.node.insertElement("g", {"class": "planets"});
         var orb = this.orbs[0]; // min orb
@@ -205,34 +208,33 @@
                     }
                 };
             }
-            this._army.forEach(function (a) {
-                a.remove();
-            });
+
+            this._army.removeAllChilds();
+            this._enemy.removeAllChilds();
+            this._units.removeAllChilds();
+
             var orb = this.orbs[this.orbs.length - 1],
                 angle = 180 + 30;
             var sent_units = reach(this.sent_units, function (k, unit) {
                 return unit.type;
             });
-            this.army.forEach(function (unit_type) {
+            this.army.forEach(function (unit_config) {
                 var sent = pop_first(sent_units, function (k, u) {
-                    return unit_type == u;
+                    return unit_config.type == u;
                 });
-                me._army.push(
+
+                me._army.appendChild(
                     me.satellite(orb, angle, function (x, y) {
-                        return $path.army(x, y, unit_type, me, sent);
+                        return $path.army(x, y, unit_config.type, me, sent);
                     })
                 );
                 angle += 50;
             });
-            this._units.forEach(function (a) {
-                a.remove();
-            });
             orb = max_orb + 16;
             angle = 90 + 30;
             if (this.units) {
-                this._units = [];
                 each(this.units, function (k, unit) {
-                    me._units.push(
+                    me._units.appendChild(
                         me.satellite(orb, angle, function (x, y) {
                             return $path.enemy(x, y, unit.type, unit.homesys);
                         })
@@ -240,17 +242,13 @@
                     angle += 30;
                 });
             }
-            this._enemy.forEach(function (a) {
-                a.remove();
-            });
             orb = max_orb + 16;
             angle = 90 + 30;
             if (this.enemy) {
-                this._enemy = [];
                 each(this.enemy, function (k, unit) {
-                    me._enemy.push(
+                    me._enemy.appendChild(
                         me.satellite(orb, angle, function (x, y) {
-                            return $path.enemy(x, y, unit, map.state.players[me.enemy_house].style);
+                            return $path.enemy(x, y, unit.type, map.state.players[me.enemy_house].style);
                         })
                     );
                     angle += 30;

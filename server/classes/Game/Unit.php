@@ -11,6 +11,7 @@ abstract class Game_Unit
     public $attack;
     public $fortAttack;
     public $cost;
+    public $type;
 
     public static function factory($type)
     {
@@ -20,7 +21,7 @@ abstract class Game_Unit
 
     public function is($type)
     {
-        return get_class($this) == self::type2class($type);
+        return $this->type == $type;
     }
 
     public static function type2class($type) {

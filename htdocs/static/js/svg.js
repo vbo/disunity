@@ -44,6 +44,12 @@
         return el;
     };
 
+    Element.prototype.removeAllChilds = function () {
+        while (this.firstChild) {
+            this.removeChild(this.firstChild);
+        }
+    };
+
     Element.prototype.insertElement = function (elementName, attributeObj, index) {
         return this.insertElementNS(this.namespaceURI, elementName, attributeObj, index);
     };

@@ -9,7 +9,10 @@
             url: this.url,
             data: data,
             dataType: "json",
-            success: callback
+            success: callback,
+            error: function (e_data) {
+                console.log('api request error', action, data, e_data);
+            }
         });
     }
 })(jQuery);

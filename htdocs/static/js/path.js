@@ -67,15 +67,12 @@
     $path.army = function(x, y, army_type, me, transparent) {
         transparent = transparent || false;
         var p = (function () {
-            if (army_type == 1) {
-                return $P.footman(x, y);
-            } else if (army_type == 2) {
-                return $P.cruiser(x, y);
-            } else {
-                return $P.robot(x, y);
+            if (!$P.hasOwnProperty(army_type)) {
+                throw "unknown army_type: " + army_type;
             }
+            return $P[army_type](x, y);
         })();
-        p.setAttrValues({"stroke": me.fill, "stroke-width": 1, "fill": me.fill});
+        p.setAttrValues({"stroke": me.fill, "stroke-width": 1, "fill": me.fill, "fill-opacity": 1});
         if (transparent) {
             p.setAttrValues({"stroke-opacity": 0.5, "fill-opacity": 0.5});
         }
@@ -91,15 +88,12 @@
 
     $path.enemy = function(x, y, army_type, me) {
         var p = (function () {
-            if (army_type == 1) {
-                return $P.footman(x, y);
-            } else if (army_type == 2) {
-                return $P.cruiser(x, y);
-            } else {
-                return $P.robot(x, y);
+            if (!$P.hasOwnProperty(army_type)) {
+                throw "unknown army_type: " + army_type;
             }
+            return $P[army_type](x, y);
         })();
-        return p.setAttrValues({"stroke": me.fill, "stroke-width": 1, "fill": me.fill})
+        return p.setAttrValues({"stroke": me.fill, "stroke-width": 1, "fill": me.fill, "fill-opacity": 1})
     };
 
     $path.frame = function (x, y, width, cell_width, padding, h, color) {
@@ -235,7 +229,7 @@
                     ["z"]
                 ]}, x, y);
             },
-            footman: function (x, y) {
+            fighter: function (x, y) {
                 var r = 5;
                 var leg = 2 * r / 3;
                 var leg_shift = r / 3;
